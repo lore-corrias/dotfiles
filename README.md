@@ -31,7 +31,14 @@ fira-code-fonts
 wlogout
 python3-gobject"
 gtk4
+network-manager-applet
+zsh
+
+> [!IMPORANT] 
+> Some packages are still missing from the list! I'll add them as I remember them.
 ```
+
+You'd also need to install [oh-my-zsh](https://ohmyz.sh).
 
 Of course you can also use ML4W's offical install script to install everything:
 ```bash
@@ -46,4 +53,10 @@ make
 and delete them with:
 ```bash
 make delete
+```
+
+### Monitor
+Remember to configure your monitor on `~/.config/hypr/conf/monitor.conf` using:
+```bash
+hyprctl monitors all
 ```

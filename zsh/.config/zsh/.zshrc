@@ -114,53 +114,12 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# function command_not_found_handler {
-#     local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
-#     printf 'zsh: command not found: %s\n' "$1"
-#     local entries=( ${(f)"$(/usr/bin/pacman -F --machinereadable -- "/usr/bin/$1")"} )
-#     if (( ${#entries[@]} )) ; then
-#         printf "${bright}$1${reset} may be found in the following packages:\n"
-#         local pkg
-#         for entry in "${entries[@]}" ; do
-#             local fields=( ${(0)entry} )
-#             if [[ "$pkg" != "${fields[2]}" ]] ; then
-#                 printf "${purple}%s/${bright}%s ${green}%s${reset}\n" "${fields[1]}" "${fields[2]}" "${fields[3]}"
-#             fi
-#             printf '    /%s\n' "${fields[4]}"
-#             pkg="${fields[2]}"
-#         done
-#     fi
-#     return 127
-# }
-
-function in {
-    local pkg="$1"
-    if pacman -Si "$pkg" &>/dev/null ; then
-        sudo pacman -S "$pkg"
-    elif pacman -Qi yay &>/dev/null ; then
-        yay -S "$pkg"
-    elif pacman -Qi paru &>/dev/null ; then
-        paru -S "$pkg"
-    fi
-}
-
-# source $ZDOTDIR/*.zsh
-
 if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ]; then
    exec tmux new-session -A -s ${USER} >/dev/null 2>&1
 fi
-
-#Display specs
-#neofetch
-
-#Display Pokemon
-#pokemon-colorscripts --no-title -r 1,3,6
-
-#Display random gifs
-#kitten icat --align left $(find $HOME/.config/neofetch/gifs/ -name "*.gif" | sort -R | head -1)
 
 eval "$(zoxide init zsh)"
 
 if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
-done
+fi
