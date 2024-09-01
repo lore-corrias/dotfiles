@@ -8,6 +8,10 @@ I also really like [Catppuccin](https://www.catppuccin.com), so I put it almost 
 
 ## Usage
 I use [GNU Stow](https://www.gnu.org/software/stow/) to manage my dotfiles. If you want to install them, here's a list of all of the required programs (for Fedora, that is):
+
+> [!WARNING] 
+> Some packages are still missing from the list! I'll add them as I remember them.
+
 ```
 hyprland
 waybar
@@ -33,9 +37,6 @@ python3-gobject"
 gtk4
 network-manager-applet
 zsh
-
-> [!IMPORANT] 
-> Some packages are still missing from the list! I'll add them as I remember them.
 ```
 
 You'd also need to install [oh-my-zsh](https://ohmyz.sh).
