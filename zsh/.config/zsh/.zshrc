@@ -1,49 +1,11 @@
-source "$ZDOTDIR/antigen.zsh"
 # If you come from bash you might have to change your $PATH.
 export PATH=$HOME/.local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
 ZSH="$HOME/.oh-my-zsh"
 
-# Set name of the theme to load --- if set to "random", it will
-# load a random theme each time oh-my-zsh is loaded, in which case,
-# to know which specific one was loaded, run: echo $RANDOM_THEME
-# See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-# ZSH_THEME="jovial"
-
-
-# Set list of themes to pick from when loading at random
-# Setting this variable when ZSH_THEME=random will cause zsh to load
-# a theme from this variable instead of looking in $ZSH/themes/
-# If set to an empty array, this variable will have no effect.
-# ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
-
-# Uncomment the following line to use case-sensitive completion.
-# CASE_SENSITIVE="true"
-
-# Uncomment the following line to use hyphen-insensitive completion.
-# Case-sensitive completion must be off. _ and - will be interchangeable.
-# HYPHEN_INSENSITIVE="true"
-
-# Uncomment one of the following lines to change the auto-update behavior
-# zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
-# zstyle ':omz:update' mode reminder  # just remind me to update when it's time
-
-# Uncomment the following line to change how often to auto-update (in days).
-# zstyle ':omz:update' frequency 13
-
-# Uncomment the following line if pasting URLs and other text is messed up.
-# DISABLE_MAGIC_FUNCTIONS="true"
-
-# Uncomment the following line to disable colors in ls.
-# DISABLE_LS_COLORS="true"
-
-# Uncomment the following line to disable auto-setting terminal title.
-# DISABLE_AUTO_TITLE="true"
-
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
@@ -65,26 +27,9 @@ ZSH="$HOME/.oh-my-zsh"
 # HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=/path/to/new-custom-folder
+# ZSH_CUSTOM=$ZDOTDIR/custom/*.zsh
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-antigen use oh-my-zsh
-
-antigen bundle git
-antigen bundle colored-man-pages
-antigen bundle zsh-users/zsh-completions
-antigen bundle zsh-users/zsh-autosuggestions
-antigen bundle zsh-users/zsh-syntax-highlighting
-
-# Load the Jovial theme and plugins
-antigen bundle zthxxx/jovial
-antigen theme zthxxx/jovial
-
-antigen apply
+source ~/.config/zsh/custom/plugins.zsh
 
 # plugins=(sudo fzf zsh-autosuggestions zsh-syntax-highlighting)
 source $ZSH/oh-my-zsh.sh
@@ -95,72 +40,9 @@ source $ZSH/oh-my-zsh.sh
 # You may need to manually set your language environment
 # export LANG=en_US.UTF-8
 
-# Preferred editor for local and remote sessions
-# if [[ -n $SSH_CONNECTION ]]; then
-#   export EDITOR='vim'
-# else
-#   export EDITOR='mvim'
-# fi
-
-# Compilation flags
-# export ARCHFLAGS="-arch x86_64"
-
-# Set personal aliases, overriding those provided by oh-my-zsh libs,
-# plugins, and themes. Aliases can be placed here, though oh-my-zsh
-# users are encouraged to define aliases within the ZSH_CUSTOM folder.
-# For a full list of active aliases, run `alias`.
-
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-
-# function command_not_found_handler {
-#     local purple='\e[1;35m' bright='\e[0;1m' green='\e[1;32m' reset='\e[0m'
-#     printf 'zsh: command not found: %s\n' "$1"
-#     local entries=( ${(f)"$(/usr/bin/pacman -F --machinereadable -- "/usr/bin/$1")"} )
-#     if (( ${#entries[@]} )) ; then
-#         printf "${bright}$1${reset} may be found in the following packages:\n"
-#         local pkg
-#         for entry in "${entries[@]}" ; do
-#             local fields=( ${(0)entry} )
-#             if [[ "$pkg" != "${fields[2]}" ]] ; then
-#                 printf "${purple}%s/${bright}%s ${green}%s${reset}\n" "${fields[1]}" "${fields[2]}" "${fields[3]}"
-#             fi
-#             printf '    /%s\n' "${fields[4]}"
-#             pkg="${fields[2]}"
-#         done
-#     fi
-#     return 127
-# }
-
-function in {
-    local pkg="$1"
-    if pacman -Si "$pkg" &>/dev/null ; then
-        sudo pacman -S "$pkg"
-    elif pacman -Qi yay &>/dev/null ; then
-        yay -S "$pkg"
-    elif pacman -Qi paru &>/dev/null ; then
-        paru -S "$pkg"
-    fi
-}
-
-# source $ZDOTDIR/*.zsh
 
 if [ -x "$(command -v tmux)" ] && [ -n "${DISPLAY}" ] && [ -z "${TMUX}" ]; then
    exec tmux new-session -A -s ${USER} >/dev/null 2>&1
 fi
 
-#Display specs
-#neofetch
-
-#Display Pokemon
-#pokemon-colorscripts --no-title -r 1,3,6
-
-#Display random gifs
-#kitten icat --align left $(find $HOME/.config/neofetch/gifs/ -name "*.gif" | sort -R | head -1)
-
 eval "$(zoxide init zsh)"
-
-if [ -f "$HOME/.cargo/env" ]; then
-  . "$HOME/.cargo/env"
-done

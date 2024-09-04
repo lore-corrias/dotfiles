@@ -40,10 +40,5 @@ bash <(curl -s https://raw.githubusercontent.com/mylinuxforwork/hyprland-starter
 
 Regardless of how you install your packages, you can then use my dotfiles with stow:
 ```bash
-make
-```
-
-and delete them with:
-```bash
-make delete
+stow --verbose --target=$HOME --restow */
 ```
