@@ -1,49 +1,34 @@
-# If you come from bash you might have to change your $PATH.
 export PATH=$HOME/.local/bin:$PATH
 
-# Path to your oh-my-zsh installation.
-ZSH="$HOME/.oh-my-zsh"
+#### ZSH PLUGINS ####
 
-# Uncomment the following line to enable command auto-correction.
-ENABLE_CORRECTION="true"
+[[ -e ${ZDOTDIR:-~}/.antidote ]] ||
+  git clone https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
 
-# Uncomment the following line to display red dots whilst waiting for completion.
-# You can also set it to another string to have that shown instead of the default red dots.
-# e.g. COMPLETION_WAITING_DOTS="%F{yellow}waiting...%f"
-# Caution: this setting can cause issues with multiline prompts in zsh < 5.7.1 (see #5765)
-# COMPLETION_WAITING_DOTS="true"
+zsh_plugins=${ZDOTDIR:-~}/.zsh_plugins
 
-# Uncomment the following line if you want to disable marking untracked files
-# under VCS as dirty. This makes repository status check for large repositories
-# much, much faster.
-# DISABLE_UNTRACKED_FILES_DIRTY="true"
+# Ensure the .zsh_plugins.txt file exists so you can add plugins.
+[[ -f ${zsh_plugins}.txt ]] || touch ${zsh_plugins}.txt
 
-# Uncomment the following line if you want to change the command execution time
-# stamp shown in the history command output.
-# You can set one of the optional three formats:
-# "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
-# or set a custom format using the strftime function format specifications,
-# see 'man strftime' for details.
-# HIST_STAMPS="mm/dd/yyyy"
+# Lazy-load antidote from its functions directory.
+fpath=($ZDOTDIR/.antidote/functions $fpath)
+autoload -Uz antidote
 
-# Would you like to use another custom folder than $ZSH/custom?
-# ZSH_CUSTOM=$ZDOTDIR/custom/*.zsh
-
-source ~/.config/zsh/custom/plugins.zsh
-
-# plugins=(sudo fzf zsh-autosuggestions zsh-syntax-highlighting)
-source $ZSH/oh-my-zsh.sh
-
-# User configuration
-# export MANPATH="/usr/local/man:$MANPATH"
-
-# You may need to manually set your language environment
-# export LANG=en_US.UTF-8
-
-   exec tmux new-session -A -s ${USER} >/dev/null 2>&1
+# Generate a new static file whenever .zsh_plugins.txt is updated.
+if [[ ! ${zsh_plugins}.zsh -nt ${zsh_plugins}.txt ]]; then
+  antidote bundle <${zsh_plugins}.txt >|${zsh_plugins}.zsh
 fi
 
-eval "$(zoxide init zsh)"
+# Source your static plugins file.
+source ${zsh_plugins}.zsh
+
+# Load custom configurations
+source $ZDOTDIR/custom/*.zsh
+
+# auto start tmux
+if [ "$TMUX" = "" ]; then
+  exec tmux
+fi
 
 if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
