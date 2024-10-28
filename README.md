@@ -10,7 +10,7 @@ I personally prefer running these dotfiles using [devpod](https://devpod.sh), me
 that in order to run my configurations you need to setup a `devcontainer.json`
 and then run:
 ```sh
-devpod up . --ide none --dotfiles "https://github.com/lore-corrias/dotfiles/tree/devcontainers"
+devpod up . --ide none --dotfiles "https://github.com/lore-corrias/dotfiles@devcontainer"
 ```
 
 and then connect either via docker/podman or SSH.
