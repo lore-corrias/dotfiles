@@ -1,0 +1,10 @@
+README.md
+
+# This is my username for devcontainers,
+# but i can probably improve this
+{{- if eq .chezmoi.username "ctf" }}
+dot_config/hypr/
+dot_config/rofi/
+dot_config/waybar/
+dot_config/alacritty/
+{{- end }}

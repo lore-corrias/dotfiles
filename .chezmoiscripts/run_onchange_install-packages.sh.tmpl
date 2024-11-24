@@ -1,0 +1,11 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+
+# Update and install packages
+sudo apt update && sudo apt install -y $(cat <<EOF
+{{ range .packages -}}
+{{ . }}
+{{ end -}}
+EOF
+)
+{{ end -}}
