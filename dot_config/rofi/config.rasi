@@ -1,0 +1,21 @@
+configuration{
+    modi: "drun,window,ssh,filebrowser";
+    icon-theme: "Oranchelo";
+    show-icons: true;
+    terminal: "alacritty";
+    drun-display-format: "{icon} {name}";
+    location: 0;
+    disable-history: false;
+    hide-scrollbar: true;
+    display-drun: "   Apps ";
+    display-window: " 󰕰  Window";
+    display-Network: " 󰤨  Network";
+    display-filebrowser: "  Files";
+    display-ssh: "  SSH";
+    ssh-command: "{terminal} -e /home/lore/.config/rofi/scripts/ssh.sh {host}";
+    sidebar-mode: true;
+    font: "Fira Code Medium";
+}
+
+@theme "catppuccin-mocha"
+
