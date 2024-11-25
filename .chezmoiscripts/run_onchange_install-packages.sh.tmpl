@@ -21,7 +21,7 @@ echo -e "${YELLOW}Starting update and package installation process...${NC}"
 
 # Update package list
 echo -e "${YELLOW}Updating package list...${NC}"
-if sudo apt update -qq; then
+if sudo apt update -qq > /dev/null 2>&1; then
     echo -e "${GREEN}Package list updated successfully!${NC}"
 else
     echo -e "${RED}Failed to update package list. Please check your network connection or repository configuration.${NC}"
@@ -35,7 +35,7 @@ if sudo apt install -y -qq $(cat <<EOF
 {{ . }}
 {{ end -}}
 EOF
-); then
+) > /dev/null 2>&1; then
     echo -e "${GREEN}Packages installed successfully!${NC}"
 else
     echo -e "${RED}Failed to install packages. Check the list of packages or your system configuration.${NC}"

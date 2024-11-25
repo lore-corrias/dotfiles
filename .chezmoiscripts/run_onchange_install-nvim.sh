@@ -39,13 +39,14 @@ if ! ./nvim.appimage --appimage-extract >/dev/null 2>&1; then
 fi
 
 # Move extracted contents to root
-if ! mv squashfs-root /; then
+if ! mv squashfs-root ~/.local; then
   echo -e "${RED}Failed to move extracted contents to root. Please check permissions.${NC}"
   exit 1
 fi
 
 # Create symbolic link
-if ln -s /squashfs-root/AppRun /usr/local/bin/nvim; then
+mkdir ~/.local/bin
+if ln -s ~/.local/squashfs-root/AppRun ~/.local/bin/nvim; then
   echo -e "${GREEN}Extraction successful!${NC}"
 else
   echo -e "${RED}Failed to extract the appimage. Please check permissions.${NC}"
