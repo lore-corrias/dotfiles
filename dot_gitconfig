@@ -1,0 +1,14 @@
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[credential "https://gist.github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[user]
+	email = 32979892+lore-corrias@users.noreply.github.com
+	name = lore-corrias
+	signingkey = 9392E9481152D63A
+[commit]
+	gpgSign = true
+[core]
+	excludesFile = ~/.gitignore

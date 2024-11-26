@@ -45,7 +45,9 @@ if ! mv squashfs-root ~/.local; then
 fi
 
 # Create symbolic link
-mkdir ~/.local/bin
+if [ ! -d ~/.local/bin ]; then
+  mkdir ~/.local/bin/
+fi
 if ln -s ~/.local/squashfs-root/AppRun ~/.local/bin/nvim; then
   echo -e "${GREEN}Extraction successful!${NC}"
 else
