@@ -25,9 +25,13 @@ source ${zsh_plugins}.zsh
 # Load custom configurations
 source $ZDOTDIR/custom/*.zsh
 
-# auto start tmux
+# auto start tmux, with containers logic
 if [ "$TMUX" = "" ]; then
-  exec tmux
+  {{ if eq env "CONTAINER_ID" "" }}
+  tmux
+  {{ else }}
+  tmux -S /tmp/tmux-{{ env "CONTAINER_ID" }}
+  {{ end }}
 fi
 
 if [ -f "$HOME/.cargo/env" ]; then
