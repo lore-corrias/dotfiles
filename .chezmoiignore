@@ -1,7 +1,7 @@
 README.md
 
 # container logic
-{{- if ne env "CONTAINER_ID" "" }}
+{{- if ne (env "CONTAINER_ID") "" }}
 dot_config/hypr/
 dot_config/rofi/
 dot_config/waybar/
