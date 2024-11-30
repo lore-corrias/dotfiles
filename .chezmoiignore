@@ -1,7 +1,7 @@
 README.md
 
-# This is my username for devcontainers, but i can probably improve this
-{{- if eq .chezmoi.username "ctf" }}
+# container logic
+{{- if ne env "CONTAINER_ID" "" }}
 dot_config/hypr/
 dot_config/rofi/
 dot_config/waybar/
