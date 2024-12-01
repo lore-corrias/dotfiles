@@ -22,8 +22,6 @@ fi
 # Source your static plugins file.
 source ${zsh_plugins}.zsh
 
-# Load custom configurations
-source $ZDOTDIR/custom/*.zsh
 
 # podman autocompletion
 autoload -U compinit; compinit
@@ -36,3 +34,8 @@ fi
 if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
+
+# Load custom configurations
+for file in $ZDOTDIR/custom/*.zsh; do
+  source "$file"
+done
