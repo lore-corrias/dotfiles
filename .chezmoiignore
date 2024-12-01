@@ -10,3 +10,4 @@ dot_config/alacritty/
 
 # This is only needed when setting up a devcontainer with devpod
 install.sh
+devcontainers

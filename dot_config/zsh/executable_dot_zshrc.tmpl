@@ -27,11 +27,7 @@ source $ZDOTDIR/custom/*.zsh
 
 # auto start tmux, with containers logic
 if [ "$TMUX" = "" ]; then
-  {{ if eq (env "CONTAINER_ID") "" }}
-  tmux
-  {{ else }}
-  tmux -S /tmp/tmux-{{ env "CONTAINER_ID" }}
-  {{ end }}
+  {{ if eq (env "CONTAINER_ID") "" }}tmux{{ else }}tmux -S /tmp/tmux-{{ env "CONTAINER_ID" }}{{ end }}
 fi
 
 if [ -f "$HOME/.cargo/env" ]; then

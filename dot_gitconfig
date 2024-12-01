@@ -7,7 +7,7 @@
 [user]
 	email = 32979892+lore-corrias@users.noreply.github.com
 	name = lore-corrias
-	signingkey = 9392E9481152D63A
+	signingkey = 6755A725C4A8C104
 [commit]
 	gpgSign = true
 [core]
