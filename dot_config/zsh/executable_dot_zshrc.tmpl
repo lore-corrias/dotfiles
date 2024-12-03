@@ -26,6 +26,11 @@ source ${zsh_plugins}.zsh
 # podman autocompletion
 autoload -U compinit; compinit
 
+# Load custom configurations
+for file in $ZDOTDIR/custom/*.zsh; do
+  source "$file"
+done
+
 # auto start tmux, with containers logic
 if [ "$TMUX" = "" ]; then
   {{ if eq (env "container") "" }}tmux{{ else }}tmux -S /tmp/tmux-{{ env "container" }}{{ end }}
@@ -34,8 +39,3 @@ fi
 if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
-
-# Load custom configurations
-for file in $ZDOTDIR/custom/*.zsh; do
-  source "$file"
-done
