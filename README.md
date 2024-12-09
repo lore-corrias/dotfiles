@@ -11,7 +11,7 @@ In order to manage my dotfiles, I recently moved to [chezmoi](https://www.chezmo
 
 If you want to use my dotfiles, you can do so by using chezmoi with this command:
 ```bash
-$ sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply lore-corrias
+sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply lore-corrias
 ```
 and that's it! You can now manage your dotfiles with chezmoi. If you don't want to use the chezmoi binary, you can add the `--one-shot` flag:
 ```bash
@@ -63,6 +63,7 @@ hyprctl monitors all
 
 ### TODO List
 
-- [ ] Automate the installation of all packages
-- [ ] Provide a way to distinguish between devcontainers and other environments: some configs change (for example, devcontainers don't need `tmux`)
-- [ ] Add a `install.sh` to allow automatic import of dotfiles with [devpod](https://devpod.sh/docs/developing-in-workspaces/dotfiles-in-a-workspace)
+- [X] Provide a way to distinguish between devcontainers and other environments: some configs change (for example, devcontainers don't need `tmux`)
+- [X] Add a `install.sh` to allow automatic import of dotfiles with [devpod](https://devpod.sh/docs/developing-in-workspaces/dotfiles-in-a-workspace)
+- [ ] Improve tmux bar
+- [ ] Explore new zsh plugins
