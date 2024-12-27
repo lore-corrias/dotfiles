@@ -27,7 +27,8 @@
  * ----------------------------------------------------- */
 
 * {
-    font-family: "Fira Code Medium", FontAwesome, Roboto, Helvetica, Arial, sans-serif;
+    font-family: "FiraCode Nerd Font";
+    font-weight: medium; 
     border: none;
     border-radius: 0px;
 }

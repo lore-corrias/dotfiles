@@ -14,7 +14,7 @@ configuration{
     display-ssh: "  SSH";
     ssh-command: "{terminal} -e /home/lore/.config/rofi/scripts/ssh.sh {host}";
     sidebar-mode: true;
-    font: "Fira Code Medium";
+    font: "Fira Code Medium 15";
 }
 
 @theme "catppuccin-mocha"
