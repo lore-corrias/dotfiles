@@ -3,6 +3,11 @@ export PATH=$HOME/.local/bin:$PATH
 # set vi mode
 set -o vi
 
+# installing fzf
+if [ -z $(command -v fzf 2>/dev/null) ]; then
+  ~/.fzf/install --key-bindings --completion --no-update-rc
+fi
+
 #### ZSH PLUGINS ####
 
 [[ -e ${ZDOTDIR:-~}/.antidote ]] ||
@@ -36,7 +41,11 @@ done
 
 # auto start tmux, with containers logic
 if [ "$TMUX" = "" ]; then
-  {{ if eq (env "container") "" }}tmux{{ else }}tmux -S /tmp/tmux-{{ env "container" }}{{ end }}
+  if [ -z "$container" ] || [ -z "$CONTAINER_ID" ]; then
+    tmux
+  else
+    tmux -S "/tmp/tmux-${container:-$CONTAINER_ID}"
+  fi
 fi
 
 if [ -f "$HOME/.cargo/env" ]; then
