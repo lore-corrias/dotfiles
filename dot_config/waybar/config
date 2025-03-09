@@ -13,8 +13,8 @@
   "modules-left": [
     "custom/appmenu",
     // "group/quicklinks",
-    "tray",
-    "hyprland/window"
+    "tray"
+    // "hyprland/window"
   ],
   "modules-center": [
     "hyprland/workspaces"
