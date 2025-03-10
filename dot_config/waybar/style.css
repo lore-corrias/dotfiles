@@ -22,14 +22,14 @@
 @define-color textcolor3 #FFFFFF;
 @define-color iconcolor #FFFFFF;
 
-@define-color textcolor  #303030;
-@define-color idk #1269cc;
+@define-color textcolor  #ffffff;
+@define-color idk #ffffff;
 @define-color idk2 #2596be;
-@define-color buttoncolor #ffffff;
+@define-color buttoncolor #1269cc;
 @define-color idk3 #303030;
 
 /* -----------------------------------------------------
- * General 
+ * General
  * ----------------------------------------------------- */
 
 * {
@@ -51,8 +51,8 @@ window#waybar {
  * ----------------------------------------------------- */
 
 #workspaces {
-    background-color: #ffffff;
-    margin: 5px 1px 6px 1px;
+    background-color: #000000;
+    margin: 5px 1px 5px 1px;
     padding: 0px 1px;
     border-radius: 15px;
     border: 0px;
@@ -73,18 +73,18 @@ window#waybar {
 
 #workspaces button.active {
     color: #ffffff;
-    background: @idk;
+    background: @buttoncolor;
     border-radius: 20px;
     min-width: 40px;
     min-height: 10px;
     transition: all 0.3s ease-in-out;
 }
 
-/*#workspaces button:hover {*/
-/*    color: @lavander;*/
-/*    background: @overlay1;*/
-/*    border-radius: 15px;*/
-/*}*/
+#workspaces button:hover {
+    color: #000000;
+    background: @buttoncolor;
+    border-radius: 15px;
+}
 
 /* -----------------------------------------------------
  * Tooltips
@@ -146,10 +146,9 @@ tooltip label {
 #custom-appmenu,
 #clock {
     margin-right: 20px;
-    font-size: 20px;
     font-weight: bold;
     color: @iconcolor;
-    padding: 4px 10px 2px 10px;
+    padding: 4px 10px 1px 10px;
     font-size: 16px;
 }
 
@@ -213,7 +212,7 @@ tooltip label {
 #clock {
     background-color: @buttoncolor;
     font-size: 16px;
-    color: @idk;
+    color: @textcolor;
     border-radius: 15px;
     margin: 10px 7px 10px 0px;
 }
@@ -223,7 +222,7 @@ tooltip label {
  * ----------------------------------------------------- */
 
 #pulseaudio {
-    background-color: @surface1;
+    background-color: #000000;
     font-size: 16px;
     color: @text;
     border-radius: 15px;
@@ -231,7 +230,7 @@ tooltip label {
 }
 
 #pulseaudio.muted {
-    background-color: @surface1;
+    background-color: #000000;
     color: @text;
 }
 
@@ -240,7 +239,7 @@ tooltip label {
  * ----------------------------------------------------- */
 
 #network {
-    background-color: @surface1;
+    background-color: #000000;
     font-size: 16px;
     color: @text;
     border-radius: 15px;
@@ -280,7 +279,7 @@ tooltip label {
  * ----------------------------------------------------- */
 
 #battery {
-    background-color: @buttoncolor;
+    background-color: #000000;
     font-size: 16px;
     color: @idk;
     border-radius: 15px;
@@ -289,7 +288,7 @@ tooltip label {
 
 #battery.charging, #battery.plugged {
     color: @text;
-    background-color: @surface1;
+    background-color: #000000;
 }
 
 @keyframes blink {
@@ -314,10 +313,12 @@ tooltip label {
  * ----------------------------------------------------- */
 
 #tray {
-    background-color: @surface1;
+    background-color: @color;
     border-radius: 15px;
-    border: 2px solid @overlay1;
-    margin:0px 10px 0px 0px;
+    /*border: 2px solid @overlay1;*/
+    margin:5px 10px 5px 5px;
+    padding-left: 5px;
+    padding-right: 5px;
 }
 
 #tray > .passive {
