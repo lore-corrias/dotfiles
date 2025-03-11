@@ -11,23 +11,26 @@
     "~/.config/waybar/modules.json"
   ],
   "modules-left": [
-    "custom/appmenu",
+    "custom/exit",
+    "wlr/taskbar",
+    "group/hardware"
+    //"custom/appmenu",
     // "group/quicklinks",
-    "tray"
+    //"tray"
     // "hyprland/window"
   ],
   "modules-center": [
     "hyprland/workspaces"
   ],
   "modules-right": [
-    "mpd",
+    "network",
     "pulseaudio",
-    // "network",
+    "mpd",
+    "battery",
+    "clock"
     // "cpu", 
     // "memory", 
     // "keyboard-state", 
-    "battery",
-    "clock",
-    "custom/exit"
+    //"custom/exit"
   ]
 }

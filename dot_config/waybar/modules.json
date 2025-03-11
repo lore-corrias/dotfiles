@@ -1,70 +1,35 @@
 {
+  "wlr/taskbar": {
+    "icon-size": 19,
+    "on-click": "activate",
+    "on-click-middle": "close",
+    "all-outputs": "true"
+  },
   "hyprland/workspaces": {
     "on-click": "activate",
     "active-only": true,
     "all-outputs": true,
     "persistent-workspaces": {
-      "*": 1
+      "*": 2
     }
   },
-  "custom/exit": {
-    "format": "",
-    "tooltip-format": "Powermenu",
-    "on-click": "wlogout -b 4",
-    "tooltip": false
-  },
-  "keyboard-state": {
-    "numlock": true,
-    "capslock": true,
-    "format": "{name} {icon}",
+  "pulseaudio": {
+    "format": "{icon} {volume}% | {format_source}",
+    "format-bluetooth": " {volume}% | {format_source}",
+    "format-bluetooth-muted": " 0% | {format_source}",
+    "format-muted": "  | {format_source}",
+    "format-source": " {volume}%",
+    "format-source-muted": " ",
     "format-icons": {
-      "locked": "",
-      "unlocked": ""
-    }
-  },
-  "tray": {
-    "icon-size": 22,
-    "spacing": 10
-  },
-  "clock": {
-    "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
-    "format-alt": "{:%Y-%m-%d}"
-  },
-  "custom/system": {
-    "format": "",
-    "tooltip": false
-  },
-  "cpu": {
-    "format": "/ C {usage}% ",
-    "on-click": "alacritty -e htop"
-  },
-  "memory": {
-    "format": "/ M {}% ",
-    "on-click": "alacritty -e htop"
-  },
-  "disk": {
-    "interval": 30,
-    "format": "D {percentage_used}% ",
-    "path": "/",
-    "on-click": "alacritty -e htop"
-  },
-  "hyprland/language": {
-    "format": "/ K {short}"
-  },
-  "group/hardware": {
-    "orientation": "inherit",
-    "drawer": {
-      "transition-duration": 300,
-      "children-class": "not-memory",
-      "transition-left-to-right": false
+      "headphone": "",
+      "headset": "",
+      "default": [
+        "",
+        "",
+        " "
+      ]
     },
-    "modules": [
-      "custom/system",
-      "disk",
-      "cpu",
-      "memory",
-      "hyprland/language"
-    ]
+    "on-click": "pavucontrol"
   },
   "network": {
     "format": "{ifname}",
@@ -76,46 +41,38 @@
     "tooltip-format-ethernet": "  {ifname} ({ipaddr}/{cidr})",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
-    "on-click": "nm-connection-editor"
+    //"on-click": "nm-connection-editor",
+    "on-click": "nm-applet —indicator"
   },
   "battery": {
     "states": {
       "warning": 30,
       "critical": 15
     },
-    "format": "{icon}   {capacity}%",
-    "format-charging": "  {capacity}%",
+    "tooltip": false,
+    "format": "{icon}  {capacity}%",
     "format-plugged": "  {capacity}%",
-    "format-alt": "{icon}  {time}",
+    "format-alt": "  {health}%",
     "format-icons": [
-      " ",
-      " ",
-      " ",
-      " ",
-      " "
+      "󱃌",
+      "󰁽",
+      "󱈏"
     ]
   },
-  "pulseaudio": {
-    "format": "{icon}  {volume}%",
-    "format-bluetooth": "{volume}% {icon} {format_source}",
-    "format-bluetooth-muted": "  {icon} {format_source}",
-    "format-muted": "  {format_source}",
-    "format-source": "{volume}% ",
-    "format-source-muted": "",
-    "format-icons": {
-      "headphone": "",
-      "hands-free": "",
-      "headset": "",
-      "phone": "",
-      "portable": "",
-      "car": "",
-      "default": [
-        "",
-        " ",
-        " "
-      ]
-    },
-    "on-click": "pavucontrol"
+  "clock": {
+    "format": "{:%H:%M} 󰥔",
+    "interval": 60,
+    "tooltip-format": "<tt><small>{calendar}</small></tt>",
+    "format-alt": "{:%d/%m/%Y}",
+    "calendar": {
+      "mode": "year",
+      "mode-mon-col": 3,
+      "format": {
+        "months": "<span color='#1269cc'><b>{}</b></span>",
+        "days": "<span color='#ffffff'><b>{}</b></span>",
+        "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
+      }
+    }
   },
   "bluetooth": {
     "format-disabled": "",
@@ -137,5 +94,53 @@
       "deactivated": ""
     },
     "on-click-right": "hyprlock"
+  },
+  "custom/exit": {
+    "format": "",
+    "tooltip-format": "Powermenu",
+    "on-click": "wlogout -b 4",
+    "tooltip": false
+  },
+  "custom/system": {
+    "format": "",
+    "tooltip": false
+  },
+  "memory": {
+    "format": "  <span color='#ffffff'>{}%</span> ",
+    "states": {
+      "warning": 70,
+      "critical": 90
+    },
+    "on-click": "alacritty -e htop"
+  },
+  "disk": {
+    "interval": 30,
+    "format": " {percentage_used}% ",
+    "path": "/",
+    "on-click": "alacritty -e htop"
+  },
+  "cpu": {
+    "interval": 1,
+    "format": "  {}% "
+  },
+  "temperature": {
+    "format": " {temperatureC}° C "
+  },
+  "group/hardware": {
+    "orientation": "inherit",
+    "drawer": {
+      "transition-duration": 300,
+      "children-class": "not-memory",
+      "transition-left-to-right": true
+    },
+    "children-class": "hardware-child",
+    "modules": [
+      //"custom/system",
+      "memory",
+      "disk",
+      "cpu",
+      "temperature"
+      //"hyprland/language"
+    ]
   }
 }
