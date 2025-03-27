@@ -1,4 +1,3 @@
-export PATH=$HOME/.local/bin:$PATH
 
 # set vi mode
 set -o vi

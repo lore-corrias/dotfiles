@@ -1,8 +1,0 @@
-[12:35:48 2025-03-11] FETCHING Version 2.39.5
-[12:35:48 2025-03-11] DOWNLOADING https://github.com/spicetify/cli/releases/download/v2.39.5/spicetify-2.39.5-linux-amd64.tar.gz
-[12:35:49 2025-03-11] EXTRACTING /var/home/lore/.spicetify/spicetify.tar.gz
-[12:35:50 2025-03-11] SETTING EXECUTABLE PERMISSIONS TO /var/home/lore/.spicetify/spicetify
-[12:35:50 2025-03-11] REMOVING /var/home/lore/.spicetify/spicetify.tar.gz
-[12:35:50 2025-03-11] spicetify path already set in /var/home/lore/.zshrc, continuing...
-[12:35:50 2025-03-11] spicetify v2.39.5 was installed successfully to /var/home/lore/.spicetify
-[12:35:50 2025-03-11] Run 'spicetify --help' to get started

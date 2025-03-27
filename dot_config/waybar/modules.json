@@ -29,7 +29,8 @@
         " "
       ]
     },
-    "on-click": "pavucontrol"
+    "on-click": "pavucontrol",
+    "on-click-right": "blueman-manager"
   },
   "network": {
     "format": "{ifname}",
@@ -73,13 +74,6 @@
         "today": "<span color='#ff6699'><b><u>{}</u></b></span>"
       }
     }
-  },
-  "bluetooth": {
-    "format-disabled": "",
-    "format-off": "",
-    "interval": 30,
-    "on-click": "blueman-manager",
-    "format-no-controller": ""
   },
   "user": {
     "format": "{user}",
