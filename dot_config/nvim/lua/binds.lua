@@ -19,3 +19,12 @@ vim.keymap.set('n', 'H', ':BufferPrevious<CR>', { desc = 'Move to the left buffe
 vim.keymap.set('n', 'L', ':BufferNext<CR>', { desc = 'Move to the right buffer' })
 vim.keymap.set('n', '<leader>bd', ':BufferClose<CR>', { desc = 'Close current buffer' })
 vim.keymap.set('n', '<leader>bf', builtin.buffers, { desc = 'Grep buffers with telescope' })
+
+-- Ale
+vim.keymap.set({"n", "v"}, "K", "<cmd>ALEHover<CR>", { noremap = true, silent = true })
+vim.keymap.set({"n", "v"}, "D", "<cmd>ALEDetail<CR>", { noremap = true, silent = true })
+
+-- Session
+vim.keymap.set({"n", "v"}, '<leader>wr', '<cmd>SessionSearch<CR>', { desc = 'Session search' })
+vim.keymap.set({"n", "v"}, '<leader>ws', '<cmd>SessionSave<CR>', { desc = 'Save session' })
+vim.keymap.set({"n", "v"}, '<leader>wa', '<cmd>SessionToggleAutoSave<CR>', { desc = 'Toggle autosave' })
