@@ -1,5 +1,3 @@
-require("plugins")
 require("binds")
 require("misc")
-
-require("conf-plugins")
+require("config.lazy")

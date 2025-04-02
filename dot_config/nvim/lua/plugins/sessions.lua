@@ -1,3 +1,4 @@
-require("auto-session").setup {
-  suppressed_dirs = { "~/", "~/Downloads", "/"},
+return {
+  -- Sessions
+  { "rmagatti/auto-session" },
 }
