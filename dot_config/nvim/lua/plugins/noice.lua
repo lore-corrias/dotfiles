@@ -1,26 +1,4 @@
 return {
-  -- General QoL
-  { "numToStr/Comment.nvim" },
-  { "nvim-lua/plenary.nvim" },
-  -- Snacks
-  {
-    "folke/snacks.nvim",
-    priority = 1000,
-    lazy = false,
-    ---@type snacks.Config
-    opts = {
-      bigfile = { enabled = true }, -- manage big files
-      explorer = { enabled = true }, -- alternative to nvim-tree
-      indent = { enabled = true }, -- show indentation lines
-      picker = { enabled = true }, -- fzf picker
-    },
-    keys = {
-      { "<leader>e",  function() Snacks.explorer() end, desc = "File Explorer" },
-      { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Buffers" },
-      { "<leader>fg", function() Snacks.picker.grep() end, desc = "Grep" },
-      { "<leader>ff", function() Snacks.picker.files() end, desc = "Find files" },
-    }
-  },
   {
     "folke/noice.nvim",
     event = "VeryLazy",
@@ -51,11 +29,4 @@ return {
       "rcarriga/nvim-notify",
     }
   }
-  -- { 
-  --   "nvim-telescope/telescope.nvim",
-  --   keys = {
-  --     { '<leader>ff', function() require('telescope.builtin').find_files() end, desc = 'Telescope find files' },
-  --     { '<leader>fg', function() require('telescope.builtin').live_grep() end, desc = 'Telescope live grep' },
-  --   }
-  -- },
 }

@@ -1,5 +1,7 @@
 return {
-  {'romgrk/barbar.nvim',
+  {
+    'romgrk/barbar.nvim',
+    event = "VeryLazy",
     cmd = {"BufferPrevious", "BufferNext"}, -- lazy load on buffer movement
     dependencies = {
       'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
