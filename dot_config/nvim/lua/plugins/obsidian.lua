@@ -1,5 +1,23 @@
+local markdown_render = {
+  'MeanderingProgrammer/render-markdown.nvim',
+  -- dependencies = { 'nvim-treesitter/nvim-treesitter' }, -- if you use the mini.nvim suite
+  -- dependencies = { 'nvim-treesitter/nvim-treesitter', 'echasnovski/mini.icons' }, -- if you use standalone mini plugins
+  dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
+  opts = {
+    checkbox = {
+      enabled = false
+    },
+    -- bullet = {
+    --   enabled = false
+    -- },
+    -- link = {
+    --   enabled = false
+    -- },
+  },
+}
+
 local obsidian = {
-  "epwalsh/obsidian.nvim",
+  "obsidian-nvim/obsidian.nvim",
   version = "*", -- recommended, use latest release instead of latest commit
   lazy = true,
   ft = "markdown",
@@ -33,11 +51,19 @@ local obsidian = {
       date_format = "%Y-%m-%d-%a",
       time_format = "%H:%M",
     },
+    completion = {
+      blink = true,
+      nvim_cmp = false,
+    },
+      -- ui = {
+      --   enabled = false,
+      -- }
   },
 }
 
 vim.o.conceallevel = 2
 
 return {
-  obsidian
+  -- markdown_render,
+  obsidian,
 }
