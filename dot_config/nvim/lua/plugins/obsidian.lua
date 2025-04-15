@@ -1,7 +1,8 @@
+<<<<<<< HEAD
 -- For obsidian
 vim.opt.conceallevel = 1
 
-return {
+local markdown_render = 
   -- Render markdown
   {
     'MeanderingProgrammer/render-markdown.nvim',
@@ -65,38 +66,57 @@ return {
       "nvim-lua/plenary.nvim",
       "nvim-telescope/telescope.nvim"
     },
-    opts = {
-      workspaces = {
-        {
-          name = "ctf",
-          path = "~/Personal/ctfs/notes",
-        },
-        {
-          name = "uni",
-          path = "~/Personal/wiki/uni",
-        },
-        {
-          name = "tesi",
-          path = "~/Personal/wiki/uni/tesi/notes",
-        },
-        --
-        -- {
-        --   name = "private",
-        --   path = "~/Personal/Notes/private",
-        -- },
+  }
+}
+
+local obsidian = {
+  "obsidian-nvim/obsidian.nvim",
+  version = "*", -- recommended, use latest release instead of latest commit
+  lazy = true,
+  ft = "markdown",
+  -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
+  -- event = {
+  --   -- If you want to use the home shortcut '~' here you need to call 'vim.fn.expand'.
+  --   -- E.g. "BufReadPre " .. vim.fn.expand "~" .. "/my-vault/*.md"
+  --   -- refer to `:h file-pattern` for more examples
+  --   "BufReadPre"
+  --     .. vim.fn.expand("~")
+  --     .. "/Personal/Notes/public/*.md",
+  --   -- "BufReadPre" .. vim.fn.expand("~") .. "/Personal/Notes/private/*.md",
+  --   "BufNewFile"
+  --     .. vim.fn.expand("~")
+  --     .. "/Personal/Notes/public/*.md",
+  --   -- "BufNewFile" .. vim.fn.expand("~") .. "/Personal/Notes/private/*.md",
+  -- },
+  dependencies = {
+    -- Required.
+    "nvim-lua/plenary.nvim",
+  },
+  opts = {
+    workspaces = {
+      {
+        name = "work",
+        path = "~/Lavoro/notes",
       },
-      templates = {
-        folder = "templates",
-        date_format = "%Y-%m-%d-%a",
-        time_format = "%H:%M",
-      },
-      completion = {
-        blink = true,
-        nvim_cmp = false,
-      },
+    },
+    templates = {
+      folder = "templates",
+      date_format = "%Y-%m-%d-%a",
+      time_format = "%H:%M",
+    },
+    completion = {
+      blink = true,
+      nvim_cmp = false,
+    },
       -- ui = {
       --   enabled = false,
       -- }
-    },
   },
+}
+
+vim.o.conceallevel = 2
+
+return {
+  markdown_render,
+  obsidian,
 }

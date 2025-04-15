@@ -4,13 +4,13 @@ set -o vi
 
 # installing fzf
 if [ -z $(command -v fzf 2>/dev/null) ]; then
-  ~/.fzf/install --key-bindings --completion --no-update-rc
+  ~/.fzf/install --key-bindings --completion --no-update-rc > /dev/null
 fi
 
 #### ZSH PLUGINS ####
 
 [[ -e ${ZDOTDIR:-~}/.antidote ]] ||
-  git clone https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote
+  git clone https://github.com/mattmc3/antidote.git ${ZDOTDIR:-~}/.antidote > /dev/null
 
 zsh_plugins=${ZDOTDIR:-~}/.zsh_plugins
 
