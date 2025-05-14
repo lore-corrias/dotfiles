@@ -2,7 +2,13 @@ local mason = {
   {
     "williamboman/mason.nvim",
     init = function() require("mason").setup() end,
-    cmd = "Mason"
+    lazy = false,
+  }
+}
+
+local lspconfig = {
+  {
+    "neovim/nvim-lspconfig",
   }
 }
 
@@ -10,43 +16,36 @@ local mason = {
 local masonlsp = {
   {
     "williamboman/mason-lspconfig.nvim",
-    dependencies = {
-      "neovim/nvim-lspconfig",
-    },
+    after = { "mason.nvim", "nvim-lspconfig" },
     -- load only if we've opened a file
-    lazy = vim.fn.argc(-1) == 0,
+    lazy = false,
     -- Auto start LSP servers installed with Mason
     -- using a default configuration
     config = function()
-      require("mason").setup()
+      require("mason").setup {}
       require("mason-lspconfig").setup {
-        --ensure_installed = {
-          -- Installing harper, which performs grammar checks
-        --  "harper_ls",
-          -- Trivy scans for misconfigurations, exposed secrets, etc.
-        --  "trivy",
-        --},
-      }
-
-      require("mason-lspconfig").setup_handlers {
-        -- Default handler (setups the server without any more info)
-        function (server_name) -- default handler (optional)
-            require("lspconfig")[server_name].setup {}
-        end,
-        -- Specific handlers
-        -- https://github.com/mrcjkb/rustaceanvim/blob/master/doc/mason.txt
-        ["rust_analyzer"] = function () end
+        auto_enable = true,
+        ensure_installed = { "eslint-lsp", "ruff", "pyright", "eslint_d" },
       }
     end,
     -- Some bindings to navigate through errors more quickly
     keys = {
       { "<leader>ca", function() vim.lsp.buf.code_action() end, desc = "Open code actions" },
       { "<leader>cr", function() vim.lsp.buf.rename() end, desc = "Open diagnostics" },
+      { "<leader>hh", function() vim.lsp.buf.hover() end, desc = "Open hover menu" },
+      { "<leader>cf", function() vim.lsp.buf.format() end, desc = "Open hover menu" },
       { "<leader>cd", function() vim.diagnostic.open_float() end, desc = "Open diagnostics" },
-      { "<leader>hh", function() vim.diagnostic.hover() end, desc = "Open hover menu" },
     }
   }
 }
+
+-- Automatic formatting on save
+vim.api.nvim_create_autocmd("BufWritePre", {
+  buffer = buffer,
+  callback = function()
+      vim.lsp.buf.format { async = false }
+  end
+})
 
 -- Configuration specific to Rust
 local rust = {
@@ -78,5 +77,6 @@ local rust = {
 return {
   mason,
   masonlsp,
+  lspconfig,
   rust
 }
