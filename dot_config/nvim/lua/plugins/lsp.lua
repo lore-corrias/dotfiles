@@ -25,7 +25,7 @@ local masonlsp = {
       require("mason").setup {}
       require("mason-lspconfig").setup {
         auto_enable = true,
-        ensure_installed = { "eslint-lsp", "ruff", "pyright", "eslint_d" },
+        ensure_installed = { "eslint", "ruff", "pyright", "clangd" },
       }
     end,
     -- Some bindings to navigate through errors more quickly
