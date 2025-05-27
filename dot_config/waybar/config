@@ -12,11 +12,11 @@
   ],
   "modules-left": [
     "custom/exit",
-    "wlr/taskbar",
+    "tray",
+    //"wlr/taskbar",
     "group/hardware"
     //"custom/appmenu",
     // "group/quicklinks",
-    //"tray"
     // "hyprland/window"
   ],
   "modules-center": [
