@@ -22,7 +22,7 @@ local markdown_render = {
       -- Output is evaluated depending on the type.
       -- | function | `value(context)`              |
       -- | string[] | `cycle(value, context.level)` |
-      icons = { ' I ', ' II ', ' III ', ' IV ', ' V ', ' VI ' },
+      icons = { ' [I] ', ' [II] ', ' [III] ', ' [IV] ', ' [V] ', ' [VI] ' },
       -- Determines how icons fill the available space.
       -- | right   | '#'s are concealed and icon is appended to right side                          |
       -- | inline  | '#'s are concealed and icon is inlined on left side                            |
@@ -52,14 +52,9 @@ local obsidian = {
   opts = {
     workspaces = {
       {
-        name = "work",
-        path = "~/Personal/wiki/uni/tesi",
+        name = "thesis",
+        path = {{ if eq .chezmoi.username "lorenzo" }}"~/bachelor-thesis"{{ else }}"~/Personal/wiki/uni/tesi"{{ end }},
       },
-    },
-    templates = {
-      folder = "templates",
-      date_format = "%Y-%m-%d-%a",
-      time_format = "%H:%M",
     },
     completion = {
       blink = true,
