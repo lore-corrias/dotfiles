@@ -2,7 +2,7 @@ configuration{
     modi: "drun,ssh,filebrowser";
     icon-theme: "Oranchelo";
     show-icons: true;
-    terminal: "alacritty";
+    terminal: "flatpak run app.devsuite.Ptyxis";
     drun-display-format: "{icon} {name}";
     location: 0;
     disable-history: false;

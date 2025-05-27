@@ -64,6 +64,6 @@ local obsidian = {
 vim.o.conceallevel = 2
 
 return {
-  -- markdown_render,
+  markdown_render,
   obsidian,
 }

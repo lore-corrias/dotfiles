@@ -14,7 +14,7 @@ local masonlsp = {
       "neovim/nvim-lspconfig",
     },
     -- load only if we've opened a file
-    lazy = vim.fn.argc(-1) == 0,
+    lazy = false,
     -- Auto start LSP servers installed with Mason
     -- using a default configuration
     config = function()
@@ -27,23 +27,13 @@ local masonlsp = {
         --  "trivy",
         --},
       }
-
-      require("mason-lspconfig").setup_handlers {
-        -- Default handler (setups the server without any more info)
-        function (server_name) -- default handler (optional)
-            require("lspconfig")[server_name].setup {}
-        end,
-        -- Specific handlers
-        -- https://github.com/mrcjkb/rustaceanvim/blob/master/doc/mason.txt
-        ["rust_analyzer"] = function () end
-      }
     end,
     -- Some bindings to navigate through errors more quickly
     keys = {
       { "<leader>ca", function() vim.lsp.buf.code_action() end, desc = "Open code actions" },
       { "<leader>cr", function() vim.lsp.buf.rename() end, desc = "Open diagnostics" },
       { "<leader>cd", function() vim.diagnostic.open_float() end, desc = "Open diagnostics" },
-      { "<leader>hh", function() vim.diagnostic.hover() end, desc = "Open hover menu" },
+      { "<leader>k", function() vim.lsp.buf.hover() end, desc = "Open hover menu" },
     }
   }
 }

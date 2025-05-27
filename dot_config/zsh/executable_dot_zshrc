@@ -43,7 +43,7 @@ if [ "$TMUX" = "" ]; then
   if [ -z "$container" ] || [ -z "$CONTAINER_ID" ]; then
     tmux
   else
-    tmux -S "/tmp/tmux-${container:-$CONTAINER_ID}"
+    tmux -S "/tmp/tmux-${CONTAINER_ID:-$container}"
   fi
 fi
 

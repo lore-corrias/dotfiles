@@ -1,5 +1,5 @@
 # Detect the Linux distribution
-if [[ "$(uname)" == "Linux" ]]; then
+if [ -z "$OS_ICON" -a "$(uname)" = "Linux" ]; then
   if [[ -f /etc/os-release ]]; then
     # Extract the distribution name from /etc/os-release
     DISTRO=$(awk -F= '/^NAME/{print $2}' /etc/os-release)
