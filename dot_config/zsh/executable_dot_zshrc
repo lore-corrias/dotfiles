@@ -50,3 +50,17 @@ fi
 if [ -f "$HOME/.cargo/env" ]; then
   . "$HOME/.cargo/env"
 fi
+
+# Command to quickly run a devcontainer
+dpup() {
+  local signing_key
+  signing_key=$(git config user.signingkey)
+
+  devpod up "$@" \
+    --ide none \
+    --configure-ssh false \
+    --dotfiles https://github.com/lore-corrias/dotfiles@devcontainers \
+    --dotfiles-script devcontainers/install.sh \
+    --gpg-agent-forwarding \
+    --git-ssh-signing-key "$signing_key" \
+}

@@ -4,11 +4,12 @@ vim.opt.conceallevel = 2
 -- Render markdown
 local markdown_render = {
   'MeanderingProgrammer/render-markdown.nvim',
-  ft = 'markdown',
+  ft = {'markdown', 'avante'},
   dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you prefer nvim-web-devicons
   ---@module 'render-markdown'
   ---@type render.md.UserConfig
   opts = {
+    file_types = { "markdown", "Avante" },
     heading = {
       -- Turn on / off heading icon & background rendering.
       enabled = true,
