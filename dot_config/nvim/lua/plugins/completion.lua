@@ -2,7 +2,7 @@ return {
   {
     'saghen/blink.cmp',
     -- optional: provides snippets for the snippet source
-    dependencies = { 'rafamadriz/friendly-snippets', 'fang2hou/blink-copilot' },
+    dependencies = { 'rafamadriz/friendly-snippets', 'fang2hou/blink-copilot', 'Kaiser-Yang/blink-cmp-avante', },
 
     -- use a release tag to download pre-built binaries
     version = '1.*',
