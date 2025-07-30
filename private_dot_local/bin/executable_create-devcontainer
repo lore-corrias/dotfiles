@@ -1,0 +1,200 @@
+
+#!/bin/bash
+
+set -euo pipefail
+
+# Ensure gum artifacts are always removed
+cleanup() {
+  rm -f /tmp/gum.tar.gz
+  rm -rf /tmp/gum_0.16.2_Linux_x86_64
+}
+trap cleanup EXIT
+
+export TEMPLATE_URL="https://gist.githubusercontent.com/lore-corrias/7245ee7cd4c952b2ed1afb1bd470f5bb/raw/2ba64d65d8e96a0bac14b35196125b17fdc337e6/devcontainer-template.json"
+export GUM_INPUT_CURSOR_FOREGROUND="#6425be"
+export GUM_INPUT_PROMPT_FOREGROUND="#ab7cd8"
+
+if ! command -v gum &>/dev/null; then
+  echo "[!] Gum is not installed, will download it inside /tmp temporarily."
+  curl -sL "https://github.com/charmbracelet/gum/releases/download/v0.16.2/gum_0.16.2_Linux_x86_64.tar.gz" -o /tmp/gum.tar.gz
+  tar -xzf /tmp/gum.tar.gz -C /tmp
+  gum() {
+    /tmp/gum_0.16.2_Linux_x86_64/gum "$@"
+  }
+fi
+
+devcontainer_template=$(curl --silent -L "$TEMPLATE_URL")
+
+forward_wayland_socket() {
+  if [ -z "$WAYLAND_DISPLAY" ] || [ -z "$XDG_RUNTIME_DIR" ]; then
+    return 1
+  fi
+  if gum confirm "It seems like you are using wayland. Do you want to forward your wayland socket to the devcontainer?"; then
+    devcontainer_template=$(echo "$devcontainer_template" | jq ".containerEnv.WAYLAND_DISPLAY = \"$WAYLAND_DISPLAY\" | .containerEnv.XDG_RUNTIME_DIR = \"/tmp\" | .mounts += [\"source=$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY,target=/tmp/$WAYLAND_DISPLAY,type=bind,z,rw\"]")
+  fi
+}
+
+configure_user() {
+  if ! gum confirm "Do you want to configure a new user for the devcontainer?"; then
+    if gum confirm "Do you want to change the default user? This option will not create a new one, so it is assumed that it is setup already."; then
+      user=""
+      while [ -z "$user" ]; do
+        user=$(gum input --prompt "Insert the username of the user to be used inside the devcontainer: " --placeholder "username")
+      done
+      devcontainer_template=$(echo "$devcontainer_template" | jq "
+        .features.\"ghcr.io/devcontainers/features/common-utils:2\".username = \"$user\" |
+        .containerEnv.HOME_USERNAME = \"$user\" |
+        .remoteUser = \"$user\" |
+        .features.\"ghcr.io/devcontainers/features/common-utils:2\".upgradePackages = \"true\" |
+        .features.\"ghcr.io/devcontainers/features/common-utils:2\".configureZshAsDefaultShell = \"true\""
+      )
+    fi
+    return 0
+  fi
+
+  devcontainer_username=""
+  devcontainer_uid=-1
+  devcontainer_gid=-1
+  confirmed_username=false
+  while [ -z "$devcontainer_username" ] && [ $confirmed_username ]; do
+    devcontainer_username=$(gum input --prompt "Start by inserting the name of the user to be used inside the devcontainer: " --placeholder "username")
+    confirmed_username=$(gum confirm "You chose '$devcontainer_username' as the username. Is that correct?")
+  done
+  while { ! [[ "$devcontainer_uid" =~ ^[0-9]+$ ]] || [ "$devcontainer_uid" -le 0 ]; } || { ! [[ "$devcontainer_gid" =~ ^[0-9]+$ ]] || [ "$devcontainer_gid" -le 0 ]; }; do
+    devcontainer_uid="$(gum input --prompt "Insert the UID of the user to be used inside the devcontainer: " --placeholder "1000")"
+    if ! [[ "$devcontainer_uid" =~ ^[0-9]+$ ]] || [ "$devcontainer_uid" -le 0 ]; then
+      echo "poba"
+      gum style --foreground red "Invalid UID. Please enter a positive integer."
+      devcontainer_uid=-1
+    fi
+    devcontainer_gid=$(gum input --prompt "Insert the GID of the user to be used inside the devcontainer: " --placeholder "1000")
+    if ! [[ "$devcontainer_gid" =~ ^[0-9]+$ ]] || [ "$devcontainer_gid" -le 0 ]; then
+      gum style --foreground red "Invalid GID. Please enter a positive integer."
+      devcontainer_uid=-1
+    fi
+  done
+  devcontainer_template=$(echo "$devcontainer_template" | jq "
+    .features.\"ghcr.io/devcontainers/features/common-utils:2\".username = \"$devcontainer_username\" | 
+      .containerEnv.HOME_USERNAME = \"$devcontainer_username\" | 
+      .remoteUser = \"$devcontainer_username\" |
+      .features.\"ghcr.io/devcontainers/features/common-utils:2\".userUid = \"$devcontainer_uid\" |
+      .features.\"ghcr.io/devcontainers/features/common-utils:2\".userGid = \"$devcontainer_gid\" |
+      .features.\"ghcr.io/devcontainers/features/common-utils:2\".upgradePackages = \"true\" |
+      .features.\"ghcr.io/devcontainers/features/common-utils:2\".configureZshAsDefaultShell = \"true\""
+  )
+}
+
+set_service_name() {
+  devcontainer_service_name=$(gum input --prompt "Insert the name of the service to be used in the devcontainer: " --placeholder "service_name")
+  if [ -z "$devcontainer_service_name" ]; then
+    set_service_name
+  fi
+  devcontainer_template=$(echo "$devcontainer_template" | jq ".service = \"$devcontainer_service_name\" | .name = \"$devcontainer_service_name\" | .runArgs += [\"--name\", \"$devcontainer_service_name\"]")
+  return 0
+}
+
+choose_image() {
+  gum log --structured --level debug "Pulling the list of images from microsoft container registry..."
+  devcontainer_images=$(curl -s https://mcr.microsoft.com/v2/_catalog | jq -r '[.repositories[] | select(startswith("devcontainers/")) ] | join(" ")')
+
+  chosen_image="$(eval "gum choose --header \"Choose the base image for the devcontainer:\" $devcontainer_images")"
+  # TODO: add version choice
+  devcontainer_template=$(echo "$devcontainer_template" | jq ".image = \"mcr.microsoft.com/$chosen_image\"")
+  return 0
+}
+
+# Not useful for now, moved to using a custom image
+install_devtools() {
+  declare -A devtools_features
+
+  devtools_features["neovim"]="ghcr.io/duduribeiro/devcontainer-features/neovim:1"
+  devtools_features["fzf"]="ghcr.io/devcontainers-extra/features/fzf:1"
+  devtools_features["tmux"]="ghcr.io/devcontainers-extra/features/tmux-apt-get:1"
+  devtools_features["fd-find"]="ghcr.io/devcontainers-extra/features/fd:1"
+  devtools_features["ripgrep"]="ghcr.io/devcontainers-extra/features/ripgrep:1"
+  devtools_features["conda"]="ghcr.io/devcontainers/features/conda:1"
+  devtools_features["node"]="ghcr.io/devcontainers/features/node:1"
+  devtools_features["eza"]="ghcr.io/social-anthrax/eza-devcontainer/eza:0"
+
+  features=("${!devtools_features[@]}")
+  features_joined=$(printf '"%s" ' "${features[@]}")
+
+  chosen_tools="$(eval "gum choose --header \"Choose which of these devtools will be installed inside the devcontainer:\" --no-limit $features_joined")"
+  for tool in $chosen_tools; do
+    devcontainer_template=$(echo "$devcontainer_template" | jq ".features[\"${devtools_features[$tool]}\"] = {}")
+  done
+  return 0
+}
+
+install_environment() {
+  if ! gum confirm "Do you want to install one or more other dev environments, like Python or NodeJS? "; then
+    return 0
+  fi
+  gum log --structured --level debug "Pulling the list of features from ghcr.io..."
+  dev_environments=$(curl -s https://api.github.com/repos/devcontainers/features/contents/src | jq -r '[.[] | select(.type=="dir") | .name ] | join(" ")')
+
+  chosen_tools="$(eval "gum choose --header \"Choose which of these environments will be installed inside the devcontainer:\" --no-limit $dev_environments")"
+  for tool in $chosen_tools; do
+    devcontainer_template=$(echo "$devcontainer_template" | jq ".features[\"ghcr.io/devcontainers/features/$tool\"] = {}")
+  done
+  return 0
+}
+
+# Note: this shouldn't be done. There should be a way to get the same results in a safer way :<
+loosen_security_permissions() {
+  if gum confirm "Do you want to disable security opts? (This could be useful if a first run does not work and returns a 'permission denied' error): "; then
+    devcontainer_template=$(echo "$devcontainer_template" | jq ".securityOpt = [\"label=disable\"]")
+  fi
+}
+
+mount_home() {
+  if gum confirm "Do you want to mount your home directory into the devcontainer?"; then
+    devcontainer_template=$(echo "$devcontainer_template" | jq ".mounts += [\"source=$HOME,target=/home/$devcontainer_username,type=bind,z,rw\"]")
+  fi
+}
+
+forward_ports() {
+  if ! gum confirm "Do you want to forward ports from the devcontainer to the host?"; then
+    return 0
+  fi
+
+  ports=$(gum input --prompt 'Insert the ports to be forwarded, separated by spaces, using the docker format: ' --placeholder "localhost:8080:80 3000:3000")
+  if [ -z "$ports" ]; then
+    gum style --foreground red "No ports provided. Skipping port forwarding."
+    return 0
+  fi
+
+  for port in $ports; do
+    devcontainer_template=$(echo "$devcontainer_template" | jq ".runArgs += [\"-p\"] | .runArgs += [\"$port\"]")
+  done
+}
+
+gum style \
+  --foreground 255 --border-foreground 255 --border double \
+  --align center --width 60 --margin "1 2" --padding "1 3" \
+  'Hello there!' 'This is a simple script for interactively creating a devcontainer using devpod and podman' '' ' - Written by @lore-corrias'
+
+configure_user
+
+set_service_name
+
+choose_image
+
+install_environment
+
+install_devtools
+
+loosen_security_permissions
+
+forward_wayland_socket
+
+mount_home
+
+forward_ports
+
+echo "$devcontainer_template" >.devcontainer.json
+
+gum style \
+  --foreground 255 --border-foreground 255 --border double \
+  --align center --width 60 --margin "1 2" --padding "1 3" \
+  'Great!' 'Your devcontainer has been created successfully!'
