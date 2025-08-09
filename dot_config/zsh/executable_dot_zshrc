@@ -59,7 +59,7 @@ dpup() {
   devpod up "$@" \
     --ide none \
     --configure-ssh false \
-    --dotfiles https://github.com/lore-corrias/dotfiles@devcontainers \
+    --dotfiles https://github.com/lore-corrias/dotfiles \
     --dotfiles-script devcontainers/install.sh \
     --gpg-agent-forwarding \
     --git-ssh-signing-key "$signing_key" \
