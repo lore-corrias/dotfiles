@@ -1,0 +1,8 @@
+[user]
+	email = 32979892+lore-corrias@users.noreply.github.com
+	name = lore-corrias
+	signingkey = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDnlqWyXR9R0k8ugo1as3rMjKrOEYZX32zB+L1SlLi/U"
+[commit]
+	gpgSign = true
+[core]
+	excludesFile = ~/.gitignore

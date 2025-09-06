@@ -1,8 +1,4 @@
-[user]
-	email = 32979892+lore-corrias@users.noreply.github.com
-	name = lore-corrias
-	signingkey = 7BE1BDC11544ACF739F35B1E5DBCB1D20355DE87
-[commit]
-	gpgSign = true
-[core]
-	excludesFile = ~/.gitignore
+[includeIf "gitdir:~/Personal/"]
+  path = ~/.gitconfig-personal
+[includeIf "gitdir:~/Lavoro/"]
+  path = ~/.gitconfig-work

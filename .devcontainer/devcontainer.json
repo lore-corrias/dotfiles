@@ -1,0 +1,27 @@
+{
+  "name": "dotfiles",
+  "build": {
+    "context": ".",
+    "dockerfile": "Dockerfile",
+    "args": {
+      "USERNAME": "dotfiles"
+    }
+  },
+  "service": "dotfiles",
+  "containerEnv": {
+    "HOME_USERNAME": "dotfiles",
+    "WAYLAND_DISPLAY": "wayland-1",
+    "XDG_RUNTIME_DIR": "/tmp"
+  },
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,z,rw",
+  "workspaceFolder": "/workspace",
+  "mounts": [
+    "source=/run/user/1000/wayland-1,target=/tmp/wayland-1,type=bind,z,rw"
+  ],
+  "runArgs": [
+    "--name",
+    "dotfiles"
+  ],
+  "remoteUser": "dotfiles",
+  "onCreateCommand": ""
+}
