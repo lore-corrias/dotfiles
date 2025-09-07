@@ -50,6 +50,6 @@ alias res1='xrandr --output DisplayPort-0 --mode 2560x1440 --rate 120'
 alias res2='xrandr --output DisplayPort-0 --mode 1920x1080 --rate 120'
 
 # Custom 
-alias zshrc='$EDITOR $ZDOTDIR/.zshrc'
-alias zshconf='$EDITOR $ZSH'
 alias ..='cd ..'
+alias ...='cd ../..'
+alias ....='cd ../../..'

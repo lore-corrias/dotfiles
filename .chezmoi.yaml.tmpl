@@ -1,0 +1,4 @@
+data:
+  # Env variable to distinguish between devcontainers
+  # dotfiles and host ones
+  profile: '{{ env "DOTFILES_PROFILE" | default "host" }}'

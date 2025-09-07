@@ -1,11 +1,11 @@
 README.md
 
 # container logic
-{{ if ne (env "container") "" }}
-.config/hypr/
-.config/rofi/
-.config/waybar/
-.config/alacritty/
+{{ if eq .profile "devcontainer" }}
+.config/hypr/**
+.config/rofi/**
+.config/waybar/**
+.config/alacritty/**
 {{ end }}
 
 # This is only needed when setting up a devcontainer with devpod
