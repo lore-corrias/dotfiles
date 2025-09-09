@@ -1,7 +1,7 @@
 [user]
 	email = 32979892+lore-corrias@users.noreply.github.com
 	name = lore-corrias
-	signingkey = "~/.ssh/github_sign.pub"
+	signingkey = "~/.ssh/github_sign"
 [commit]
 	gpgSign = true
 [core]
