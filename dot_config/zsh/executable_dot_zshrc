@@ -34,20 +34,16 @@ source "$zsh_plugins.zsh"
 autoload -U compinit; compinit
 
 # Load custom configurations
+for file in $ZDOTDIR/custom/*.zsh; do
+  zsh-defer source "$file"
+done
+
+# auto start tmux, with containers logic
 if [[ -z $TMUX && -o login && -t 1 ]]; then
   if [[ -z "$container$CONTAINER_ID" ]]; then
     exec tmux
   else
     exec tmux -S "/tmp/tmux-${CONTAINER_ID:-$container}"
-  fi
-fi
-
-# auto start tmux, with containers logic
-if [ "$TMUX" = "" ]; then
-  if [ -z "$container" ] || [ -z "$CONTAINER_ID" ]; then
-    tmux
-  else
-    tmux -S "/tmp/tmux-${CONTAINER_ID:-$container}"
   fi
 fi
 
