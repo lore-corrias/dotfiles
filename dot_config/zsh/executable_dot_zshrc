@@ -39,7 +39,7 @@ for file in $ZDOTDIR/custom/*.zsh; do
 done
 
 # auto start tmux, with containers logic
-if [[ -z $TMUX && -o login && -t 1 ]]; then
+if [[ -z $TMUX ]]; then
   if [[ -z "$container$CONTAINER_ID" ]]; then
     exec tmux
   else
