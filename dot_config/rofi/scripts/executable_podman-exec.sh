@@ -1,16 +1,36 @@
 #!/bin/bash
 set -Eeuo pipefail
 
+icon_for_image() {
+  # $1 = image ref (e.g., ubuntu:22.04, debian:bookworm, alpine, fedora, archlinux, centos, rhel, suse, void)
+  # Defaults to the Linux/Tux icon if no match.
+  local s="${1,,}" icon=""
+  case "$s" in
+    *alpine*)          icon="" ;;      # nf-linux-alpine
+    *ubuntu*)          icon="" ;;      # nf-linux-ubuntu
+    *debian*)          icon="" ;;      # nf-linux-debian
+    *fedora*)          icon="" ;;      # nf-linux-fedora
+    *arch*|*manjaro*)  icon="" ;;      # nf-linux-archlinux
+    *centos*)          icon="" ;;      # nf-linux-centos
+    *rhel*|*redhat*)   icon="" ;;      # nf-linux-redhat
+    *opensuse*|*suse*) icon="" ;;      # nf-linux-opensuse
+    *void*)            icon="" ;;      # nf-linux-void
+  esac
+  printf %s "$icon"
+}
+
 print_menu() {
-  printf '\0prompt\x1f%s\n' "Podman (all)"
+  printf '\0prompt\x1f%s\n' "  Containers"
 
   mapfile -t rows < <(podman ps -a --format '{{.Names}}' | sort -f || true)
   ((${#rows[@]}==0)) && { echo "— No containers —"; return; }
 
   local r
   for r in "${rows[@]}"; do
-    # show the name, but also attach an info field we can read later
-    printf '%s\0info\x1fC:%s\n' "$r" "$r"
+    img="$(podman inspect -f '{{.Config.Image}}' "$r" 2>/dev/null || \
+           podman inspect -f '{{.ImageName}}' "$r" 2>/dev/null || echo "")"
+    icon="$(icon_for_image "$img")"
+    printf '%s  %s\0info\x1fC:%s\n' "$icon" "$r" "$r"
   done
 }
 
@@ -26,7 +46,7 @@ open_shell() {
     podman start "$cname" >/dev/null 2>&1 || true
   fi
 
-  local title="🫙 ${cname}"
+  local title="  ${cname}"
   alacritty -t "$title" -e /bin/sh -c \
     "podman exec -it \"$cname\" $SHELL" \
     >/dev/null 2>&1 &

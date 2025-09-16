@@ -185,7 +185,7 @@ install_devtools
 
 loosen_security_permissions
 
-forward_wayland_socket
+# forward_wayland_socket
 
 mount_home
 

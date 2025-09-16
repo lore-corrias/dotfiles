@@ -1,11 +1,14 @@
-LOGFILE="/tmp/rofi_ssh_debug.log"
-echo "Script executed at $(date)" >>"$LOGFILE"
-echo "Arguments: $@" >>"$LOGFILE"
+#!/usr/bin/env bash
+set -Eeuo pipefail
 
-if /usr/bin/tmux has-session 2>/dev/null; then
-  echo "Tmux session exists." >>"$LOGFILE"
-  /usr/bin/tmux new-window -n "SSH-$1" "/usr/bin/ssh $1"
-else
-  echo "No tmux session found." >>"$LOGFILE"
-  /usr/bin/tmux new-session -s main "/usr/bin/ssh $1"
-fi
+HOST=${1:-}
+COMMAND=(ssh)
+DEVPOD_SUFFIX=".devpod"
+
+# matches something like "name.devpod" exactly
+# if [[ "$HOST" =~ ^[[:alnum:]]+\.devpod$ ]]; then
+#   COMMAND=(devpod ssh --command zsh)
+#   HOST="${HOST%$DEVPOD_SUFFIX}"   # strip trailing .devpod
+# fi
+
+exec "${COMMAND[@]}" "$HOST"
