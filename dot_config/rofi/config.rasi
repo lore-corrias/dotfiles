@@ -1,8 +1,8 @@
 configuration{
-    modi: "drun,ssh,filebrowser";
+    modi: "drun,ssh,filebrowser,podman:~/.config/rofi/scripts/podman-exec.sh";
     icon-theme: "Oranchelo";
     show-icons: true;
-    terminal: "flatpak run app.devsuite.Ptyxis";
+    terminal: "alacritty";
     drun-display-format: "{icon} {name}";
     location: 0;
     disable-history: false;
