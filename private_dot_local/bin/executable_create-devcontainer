@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 set -euo pipefail
@@ -30,7 +29,7 @@ forward_wayland_socket() {
     return 1
   fi
   if gum confirm "It seems like you are using wayland. Do you want to forward your wayland socket to the devcontainer?"; then
-    devcontainer_template=$(echo "$devcontainer_template" | jq ".containerEnv.WAYLAND_DISPLAY = \"$WAYLAND_DISPLAY\" | .containerEnv.XDG_RUNTIME_DIR = \"/tmp\" | .mounts += [\"source=$XDG_RUNTIME_DIR/$WAYLAND_DISPLAY,target=/tmp/$WAYLAND_DISPLAY,type=bind,z,rw\"]")
+    devcontainer_template=$(echo "$devcontainer_template" | jq '.containerEnv.WAYLAND_DISPLAY = "${localEnv:WAYLAND_DISPLAY}" | .containerEnv.XDG_RUNTIME_DIR = "${localEnv:XDG_RUNTIME_DIR}" | .mounts += ["source=${localEnv:XDG_RUNTIME_DIR}/${localEnv:WAYLAND_DISPLAY},target=${localEnv:XDG_RUNTIME_DIR}/${localEnv:WAYLAND_DISPLAY},type=bind,z,rw","source=${localEnv:XDG_RUNTIME_DIR}/bus,target=${localEnv:XDG_RUNTIME_DIR}/bus,type=bind,z,rw"]')
   fi
 }
 
@@ -186,7 +185,7 @@ install_devtools
 
 loosen_security_permissions
 
-forward_wayland_socket
+# forward_wayland_socket
 
 mount_home
 

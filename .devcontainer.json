@@ -1,0 +1,15 @@
+{
+  "name": "dotfiles-dc",
+  "image": "localhost/devcontainer",
+  "service": "dotfiles-dc",
+  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,z,rw",
+  "workspaceFolder": "/workspace",
+  "runArgs": [
+    "--name",
+    "dotfiles-dc",
+    "--hostname",
+    "dotfiles-dc"
+  ],
+  "remoteUser": "",
+  "onCreateCommand": ""
+}

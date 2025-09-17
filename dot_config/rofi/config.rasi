@@ -1,8 +1,7 @@
 configuration{
-    modi: "drun,ssh,filebrowser";
+    modi: "drun,ssh";
     icon-theme: "Oranchelo";
     show-icons: true;
-    terminal: "flatpak run app.devsuite.Ptyxis";
     drun-display-format: "{icon} {name}";
     location: 0;
     disable-history: false;
@@ -12,7 +11,7 @@ configuration{
     display-Network: " 󰤨  Network";
     display-filebrowser: "  Files";
     display-ssh: "  SSH";
-    ssh-command: "{terminal} -e /home/lore/.config/rofi/scripts/ssh.sh {host}";
+    ssh-command: "{terminal} -e /bin/sh -lc \"$HOME/.config/rofi/scripts/ssh.sh {host}\"";
     sidebar-mode: true;
     font: "Fira Code Medium 15";
 }
