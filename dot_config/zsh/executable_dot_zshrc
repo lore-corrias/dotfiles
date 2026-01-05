@@ -33,8 +33,12 @@ source "$zsh_plugins.zsh"
 # podman autocompletion
 autoload -U compinit; compinit
 
-# Load custom configurations
+# Load history without defer
+source "$ZDOTDIR/custom/history.zsh"
+
+# Load other custom scripts with defer
 for file in $ZDOTDIR/custom/*.zsh; do
+  [[ "$file" == *"history.zsh" ]] && continue
   zsh-defer source "$file"
 done
 

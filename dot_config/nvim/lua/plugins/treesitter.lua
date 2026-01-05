@@ -2,20 +2,41 @@ return {
   {
     "nvim-treesitter/nvim-treesitter",
     version = false,
-    event = { "VeryLazy" },
-    lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
-    cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
+    lazy = false,
     build = ":TSUpdate",
-    config = function () 
-      local configs = require("nvim-treesitter.configs")
-
-      configs.setup({
-          auto_install = true,
-          sync_install = false,
-          highlight = { enable = true },
-          indent = { enable = true },  
-          compilers = { "gcc" },
-        })
+    opts = {
+      indent = { enable = true },
+      highlight = { enable = true },
+      folds = { enable = true },
+      ensure_installed = {
+        "bash",
+        "c",
+        "diff",
+        "html",
+        "javascript",
+        "jsdoc",
+        "json",
+        "jsonc",
+        "lua",
+        "luadoc",
+        "luap",
+        "markdown",
+        "markdown_inline",
+        "printf",
+        "python",
+        "query",
+        "regex",
+        "toml",
+        "tsx",
+        "typescript",
+        "vim",
+        "vimdoc",
+        "xml",
+        "yaml",
+      },
+    },
+    config = function(_, opts)
+      require'nvim-treesitter'.setup(opts)
     end,
   },
 }

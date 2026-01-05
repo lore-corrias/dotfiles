@@ -191,6 +191,9 @@ mount_home
 
 forward_ports
 
+# add label to specify that this container is managed by devpod
+devcontainer_template=$(echo "$devcontainer_template" | jq '.runArgs += ["--label", "manager=devpod"]')
+
 echo "$devcontainer_template" >.devcontainer.json
 
 gum style \
