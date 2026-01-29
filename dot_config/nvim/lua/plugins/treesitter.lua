@@ -1,42 +1,20 @@
 return {
   {
     "nvim-treesitter/nvim-treesitter",
-    version = false,
+    main = "nvim-treesitter.configs",
+    branch = 'master',
     lazy = false,
     build = ":TSUpdate",
     opts = {
-      indent = { enable = true },
-      highlight = { enable = true },
-      folds = { enable = true },
-      ensure_installed = {
-        "bash",
-        "c",
-        "diff",
-        "html",
-        "javascript",
-        "jsdoc",
-        "json",
-        "jsonc",
-        "lua",
-        "luadoc",
-        "luap",
-        "markdown",
-        "markdown_inline",
-        "printf",
-        "python",
-        "query",
-        "regex",
-        "toml",
-        "tsx",
-        "typescript",
-        "vim",
-        "vimdoc",
-        "xml",
-        "yaml",
+      ensure_installed = { "c", "lua", "vim", "python", "markdown" },
+      auto_install = true,
+      highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
       },
-    },
-    config = function(_, opts)
-      require'nvim-treesitter'.setup(opts)
-    end,
-  },
+      indent = {
+        enable = true,
+      }
+    }
+  }
 }

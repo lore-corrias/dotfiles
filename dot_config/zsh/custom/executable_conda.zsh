@@ -1,0 +1,20 @@
+#!/bin/sh
+
+if [ "$CONTAINER_ID" = "ctfbox" ]; then
+  # >>> conda initialize >>>
+  # !! Contents within this block are managed by 'conda init' !!
+  __conda_setup="$('/miniconda/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+  if [ $? -eq 0 ]; then
+      eval "$__conda_setup"
+  else
+      if [ -f "/miniconda/etc/profile.d/conda.sh" ]; then
+          . "/miniconda/etc/profile.d/conda.sh"
+      else
+          export PATH="/miniconda/bin:$PATH"
+      fi
+  fi
+  unset __conda_setup
+  # <<< conda initialize <<<
+  
+  conda activate pwn
+fi
