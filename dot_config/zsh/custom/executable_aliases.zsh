@@ -49,6 +49,9 @@ alias update-grub='sudo grub-mkconfig -o /boot/grub/grub.cfg'
 alias res1='xrandr --output DisplayPort-0 --mode 2560x1440 --rate 120'
 alias res2='xrandr --output DisplayPort-0 --mode 1920x1080 --rate 120'
 
+# Bitwarden
+alias bw="flatpak run --command=bw com.bitwarden.desktop"
+
 # Custom 
 alias ..='cd ..'
 alias ...='cd ../..'
