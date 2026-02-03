@@ -8,7 +8,6 @@ return {
     ---@type avante.Config
     opts = {
       -- instructions_file = "avante.md",
-      auto_suggestions_provider = "copilot",
       provider = "copilot",
       providers = {
         gemini = {
@@ -20,9 +19,6 @@ return {
           model = "gpt-4o-2024-08-06",
           temperature = 0,
         },
-      },
-      behaviour = {
-        auto_suggestions = true,
       },
       selector = {
         exclude_auto_select = { "NvimTree" },
