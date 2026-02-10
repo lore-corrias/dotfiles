@@ -52,3 +52,16 @@ vim.api.nvim_create_autocmd({
 	pattern = "*.tmpl",
 	callback = detect_tmpl_filetype,
 })
+
+-- add ansible filetype
+vim.filetype.add({
+  extension = {
+    yml = 'yaml.ansible'
+  }
+})
+
+-- add docker compose filetype
+vim.api.nvim_create_autocmd({ "BufRead", "BufNewFile" }, {
+    pattern = "docker-compose.yml",
+    command = "set filetype=yaml.docker-compose"
+})
