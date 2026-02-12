@@ -11,16 +11,17 @@ if [ -d "$HOME/.spicetify" ]; then
   export PATH=$HOME/.poba:$PATH
 fi
 
-if command -v soar &> /dev/null; then
-  export PATH="$HOME/.local/share/soar/bin:$PATH"
-fi
-if command -v fnm &> /dev/null; then
-  export PATH="$HOME/.local/share/fnm:$PATH"
-fi
-
 {{- if eq .profile "devcontainer" }}
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
 export XDG_STATE_HOME="$HOME/.local/state"
 export APPIMAGE_EXTRACT_AND_RUN=1
+
+if command -v soar &> /dev/null; then
+  export PATH="$HOME/.local/share/soar/bin:$PATH"
+fi
+if [ -d "$HOME/.local/share/fnm" ]; then
+  export PATH="$HOME/.local/share/fnm:$PATH"
+  eval "$(fnm env --use-on-cd)"
+fi
 {{- end }}

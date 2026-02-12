@@ -11,7 +11,7 @@ configuration{
     display-Network: " 󰤨  Network";
     display-filebrowser: "  Files";
     display-ssh: "  SSH";
-    ssh-command: "{terminal} -e /bin/sh -lc \"$HOME/.config/rofi/scripts/ssh.sh {host}\"";
+    ssh-command: "{terminal} -e /bin/sh -lc \"ssh -A {host}\"";
     sidebar-mode: true;
     font: "Fira Code Medium 15";
 }
