@@ -1,10 +1,10 @@
 [user]
 	email = 32979892+lore-corrias@users.noreply.github.com
 	name = lore-corrias
-	signingkey = "~/.ssh/github_sign"
+	signingkey = 7BE1BDC11544ACF739F35B1E5DBCB1D20355DE87
 [commit]
 	gpgSign = true
 [core]
 	excludesFile = ~/.gitignore
 [gpg]
-	format = ssh
+	format = openpgp
