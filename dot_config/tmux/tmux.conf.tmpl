@@ -83,5 +83,9 @@ set -s set-clipboard on
 set -g default-terminal "alacritty"
 # tmux ≥ 3.2 (preferred):
 set -as terminal-features ",alacritty:RGB,alacritty:clipboard,xterm-256color:RGB,xterm-256color:clipboard"
+{{- if eq .profile "devcontainer" }}
 # Safe fallback for older tmux:
 set -ga terminal-overrides ",*:Tc,*:cud1=\E[1B"
+{{ else }}
+set -ga terminal-overrides ",*:Tc"
+{{- end }}
