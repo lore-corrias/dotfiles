@@ -1,15 +1,24 @@
 {
   "name": "dotfiles-dc",
-  "image": "localhost/devcontainer",
+  "image": "fedora:latest",
   "service": "dotfiles-dc",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,z,rw",
   "workspaceFolder": "/workspace",
-  "runArgs": [
-    "--name",
-    "dotfiles-dc",
-    "--hostname",
-    "dotfiles-dc"
-  ],
-  "remoteUser": "",
-  "onCreateCommand": ""
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "upgradePackages": true,
+      "installOhMyZsh": false,
+      "installOhMyZshConfig": false,
+      "username": "none",
+      "userUid": 1000,
+      "userGid": 1000
+    }
+  },
+  "containerEnv": {
+    "LANG": "en_US.UTF-8",
+    "LANGUAGE": "en_US:en"
+  },
+  "remoteUser": "root",
+  "containerUser": "root"
 }

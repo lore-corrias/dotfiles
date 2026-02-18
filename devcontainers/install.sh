@@ -27,6 +27,9 @@ wget "https://github.com/tmux/tmux-builds/releases/download/v${LATEST_TMUX_VERSI
   mv /tmp/tmux "$HOME/.local/bin/" && \
   chmod +x "$HOME/.local/bin/tmux"
 
+# Add alacritty terminfo
+curl -LO https://raw.githubusercontent.com/alacritty/alacritty/master/extra/alacritty.info && tic -x alacritty.info && rm alacritty.info
+
 soar add -y neovim
 soar add -y lazygit
 soar add -y ripgrep

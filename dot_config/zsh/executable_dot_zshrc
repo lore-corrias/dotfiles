@@ -36,10 +36,11 @@ autoload -U compinit; compinit
 # Load scripts without defer
 source "$ZDOTDIR/custom/history.zsh"
 source "$ZDOTDIR/custom/conda.zsh"
+source "$ZDOTDIR/custom/env.zsh"
 
 # Load other custom scripts with defer
 for file in $ZDOTDIR/custom/*.zsh; do
-  [[ "$file" == *"history.zsh"  || "$file" == *"conda.zsh" ]] && continue
+  [[ "$file" == *"history.zsh"  || "$file" == *"conda.zsh" || "$file" == *"env.zsh" ]] && continue
   zsh-defer source "$file"
 done
 
