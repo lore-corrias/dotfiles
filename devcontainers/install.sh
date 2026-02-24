@@ -8,12 +8,7 @@ export PATH="$HOME/.local/bin:$HOME/.local/share/soar/bin:$HOME/.local/share/fnm
 # Install chezmoi as one-shot to setup the dotfiles inside a devcontainer
 DOTFILES_PROFILE=devcontainer sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply lore-corrias
 
-# Installing tools
-echo "Installing tools via Soar..."
-
 LATEST_SOAR_VERSION=$(curl -s https://api.github.com/repos/pkgforge/soar/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-LATEST_TMUX_VERSION=$(curl -s https://api.github.com/repos/tmux/tmux-builds/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
-LATEST_TMUX_VERSION=${LATEST_TMUX_VERSION#v}
 
 mkdir -p "$HOME/.local/bin"
 
@@ -21,26 +16,13 @@ mkdir -p "$HOME/.local/bin"
 wget "https://github.com/pkgforge/soar/releases/download/${LATEST_SOAR_VERSION}/soar-x86_64-linux" -O "$HOME/.local/bin/soar" && \
   chmod +x "$HOME/.local/bin/soar" && \
 
-# Install tmux
-wget "https://github.com/tmux/tmux-builds/releases/download/v${LATEST_TMUX_VERSION}/tmux-${LATEST_TMUX_VERSION}-linux-x86_64.tar.gz" -O "/tmp/tmux.tar.gz" && \
-  tar -xzf /tmp/tmux.tar.gz -C "/tmp" && \
-  mv /tmp/tmux "$HOME/.local/bin/" && \
-  chmod +x "$HOME/.local/bin/tmux"
-
 # Add alacritty terminfo
 curl -LO https://raw.githubusercontent.com/alacritty/alacritty/master/extra/alacritty.info && tic -x alacritty.info && rm alacritty.info
 
-soar add -y neovim
-soar add -y lazygit
-soar add -y ripgrep
-soar add -y fd
-soar add -y fzf
-soar add -y zoxide
-soar add -y bat
-soar add -y eza
+# Installing tools
+echo "Installing tools via Soar..."
+soar apply -y
 
-# Installing node via fast node manager
-curl -fsSL https://fnm.vercel.app/install | bash
-fnm install --lts 
+soar add -y lazygit fd zoxide bat eza
 
 echo "Installation complete!"
