@@ -9,6 +9,8 @@ export PATH="$HOME/.local/bin:$HOME/.local/share/soar/bin:$HOME/.local/share/fnm
 DOTFILES_PROFILE=devcontainer sh -c "$(curl -fsLS get.chezmoi.io)" -- init --apply lore-corrias
 
 LATEST_SOAR_VERSION=$(curl -s https://api.github.com/repos/pkgforge/soar/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+LATEST_TMUX_VERSION=$(curl -s https://api.github.com/repos/tmux/tmux-builds/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
+LATEST_TMUX_VERSION=${LATEST_TMUX_VERSION#v}
 
 mkdir -p "$HOME/.local/bin"
 
@@ -21,8 +23,17 @@ curl -LO https://raw.githubusercontent.com/alacritty/alacritty/master/extra/alac
 
 # Installing tools
 echo "Installing tools via Soar..."
+
 soar apply -y
 
-soar add -y lazygit fd zoxide bat eza
+soar add -y lazygit
+soar add -y fd
+soar add -y zoxide
+soar add -y bat
+soar add -y eza
+
+mkdir -p "$HOME/.local/share/fnm"
+curl -fsSL https://fnm.vercel.app/install | bash -s -- -d "$HOME/.local/share/fnm"
+fnm install --lts
 
 echo "Installation complete!"

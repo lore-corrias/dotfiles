@@ -80,21 +80,12 @@ set-option -g focus-events on
 set -s set-clipboard on
 # set -as terminal-features ',xterm-256color:clipboard'
 
-# 1. Tell tmux what it is (the terminal inside tmux)
-# 'tmux-256color' is preferred over 'screen-256color' if your system supports it.
-set -g default-terminal "tmux-256color"
-
-# 2. Tell tmux that the outer terminal (Alacritty) supports RGB color & Clipboard
-# This uses the modern 'terminal-features' (Tmux 3.2+)
-set -as terminal-features ",alacritty:RGB"
-set -as terminal-features ",xterm-256color:RGB"
-
-# Optional: Enable system clipboard (if using tmux-yank or standard bindings)
-set -as terminal-features ",alacritty:clipboard"
-set -as terminal-features ",xterm-256color:clipboard"
-
+set -g default-terminal "alacritty"
 # tmux ≥ 3.2 (preferred):
+set -as terminal-features ",alacritty:RGB,alacritty:clipboard,xterm-256color:RGB,xterm-256color:clipboard"
 {{- if eq .profile "devcontainer" }}
 # Safe fallback for older tmux:
-set -ga terminal-overrides ",*:cud1=\E[1B"
+set -ga terminal-overrides ",*:Tc,*:cud1=\E[1B"
+{{ else }}
+set -ga terminal-overrides ",*:Tc"
 {{- end }}
