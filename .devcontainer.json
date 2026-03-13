@@ -1,15 +1,22 @@
 {
-  "name": "dotfiles-dc",
-  "image": "localhost/devcontainer",
-  "service": "dotfiles-dc",
-  "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,z,rw",
+  "name": "chezmoi-dc",
+  "image": "debian:bookworm-slim",
+  "service": "chezmoi-dc",
   "workspaceFolder": "/workspace",
-  "runArgs": [
-    "--name",
-    "dotfiles-dc",
-    "--hostname",
-    "dotfiles-dc"
-  ],
-  "remoteUser": "",
-  "onCreateCommand": ""
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "configureZshAsDefaultShell": true,
+      "upgradePackages": true,
+      "installOhMyZsh": false,
+      "installOhMyZshConfig": false,
+      "username": "none"
+    }
+  },
+  "containerEnv": {
+    "LANG": "en_US.UTF-8",
+    "LANGUAGE": "en_US:en"
+  },
+  "remoteUser": "root",
+  "containerUser": "root"
 }

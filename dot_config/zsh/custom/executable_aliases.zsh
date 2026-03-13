@@ -56,3 +56,4 @@ alias bw="flatpak run --command=bw com.bitwarden.desktop"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
+alias rg='ripgrep'

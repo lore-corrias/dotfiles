@@ -26,12 +26,6 @@ echo "Installing tools via Soar..."
 
 soar apply -y
 
-soar add -y lazygit
-soar add -y fd
-soar add -y zoxide
-soar add -y bat
-soar add -y eza
-
 mkdir -p "$HOME/.local/share/fnm"
 curl -fsSL https://fnm.vercel.app/install | bash -s -- -d "$HOME/.local/share/fnm"
 fnm install --lts
