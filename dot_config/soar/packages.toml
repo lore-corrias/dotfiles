@@ -42,3 +42,8 @@ eza = {
   asset_pattern = "eza_x86_64-unknown-linux-musl.tar.gz",
   version = "*",
 }
+tree-sitter-cli = {
+  github = "tree-sitter/tree-sitter",
+  asset_pattern = "tree-sitter-cli-linux-x86.zip",
+  version = "*",
+}
