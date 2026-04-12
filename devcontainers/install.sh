@@ -30,4 +30,6 @@ mkdir -p "$HOME/.local/share/fnm"
 curl -fsSL https://fnm.vercel.app/install | bash -s -- -d "$HOME/.local/share/fnm"
 fnm install --lts
 
+curl -fsSL https://claude.ai/install.sh | bash
+
 echo "Installation complete!"
