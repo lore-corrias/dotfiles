@@ -11,3 +11,10 @@ vim.opt.expandtab = true
 vim.opt.smartindent = true
 
 vim.opt.laststatus = 3
+
+-- treesitter
+vim.api.nvim_create_autocmd("FileType", {
+  callback = function(ev)
+    pcall(vim.treesitter.start, ev.buf)
+  end,
+})
