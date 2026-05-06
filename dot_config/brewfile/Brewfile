@@ -1,0 +1,17 @@
+brew "neovim"
+brew "ripgrep"
+brew "tmux"
+brew "lazygit"
+brew "fd"
+brew "zoxide"
+brew "bat"
+brew "eza"
+brew "tree-sitter"
+brew "node"
+brew "uv"
+
+# AI Tools
+tap "anomalyco/tap"
+brew "opencode"
+tap "anthropics/tap"
+brew "claude-code"

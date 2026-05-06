@@ -12,24 +12,24 @@ LATEST_SOAR_VERSION=$(curl -s https://api.github.com/repos/pkgforge/soar/release
 LATEST_TMUX_VERSION=$(curl -s https://api.github.com/repos/tmux/tmux-builds/releases/latest | grep -oP '"tag_name": "\K(.*)(?=")')
 LATEST_TMUX_VERSION=${LATEST_TMUX_VERSION#v}
 
+# Make sure local bin directory exists
 mkdir -p "$HOME/.local/bin"
 
-# Install soar
-wget "https://github.com/pkgforge/soar/releases/download/${LATEST_SOAR_VERSION}/soar-x86_64-linux" -O "$HOME/.local/bin/soar" && \
-  chmod +x "$HOME/.local/bin/soar" && \
+# Install Homebrew
+if ! command -v brew &> /dev/null; then
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+  
+  eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+fi
 
-# Add alacritty terminfo
-curl -LO https://raw.githubusercontent.com/alacritty/alacritty/master/extra/alacritty.info && tic -x alacritty.info && rm alacritty.info
+# Install from Brewfile
+brew bundle install --file=$HOME/.config/brewfile/Brewfile
 
-# Installing tools
-echo "Installing tools via Soar..."
-
-soar apply -y
-
-mkdir -p "$HOME/.local/share/fnm"
-curl -fsSL https://fnm.vercel.app/install | bash -s -- -d "$HOME/.local/share/fnm"
-fnm install --lts
-
-curl -fsSL https://claude.ai/install.sh | bash
+# Install LSP skill for claude code
+cd /tmp && \
+  git clone https://github.com/nesaminua/claude-code-lsp-enforcement-kit.git && \\
+  cd claude-code-lsp-enforcement-kit && \
+  bash install.sh && 
+  rm -r /tmp/claude-code-lsp-enforcement-kit
 
 echo "Installation complete!"
