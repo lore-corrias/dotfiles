@@ -15,6 +15,9 @@ LATEST_TMUX_VERSION=${LATEST_TMUX_VERSION#v}
 # Make sure local bin directory exists
 mkdir -p "$HOME/.local/bin"
 
+# Install alacritty terminfo
+curl -LO https://raw.githubusercontent.com/alacritty/alacritty/master/extra/alacritty.info && tic -x alacritty.info && rm alacritty.info
+
 # Install Homebrew
 if ! command -v brew &> /dev/null; then
   /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -25,11 +28,15 @@ fi
 # Install from Brewfile
 brew bundle install --file=$HOME/.config/brewfile/Brewfile
 
+# Install and configure serena for claude
+uv tool install -p 3.13 serena-agent@latest --prerelease=allow && \
+  serena setup claude-code
+
 # Install LSP skill for claude code
-cd /tmp && \
-  git clone https://github.com/nesaminua/claude-code-lsp-enforcement-kit.git && \\
+(cd /tmp && \
+  git clone https://github.com/nesaminua/claude-code-lsp-enforcement-kit.git && \
   cd claude-code-lsp-enforcement-kit && \
   bash install.sh && 
-  rm -r /tmp/claude-code-lsp-enforcement-kit
+  rm -r /tmp/claude-code-lsp-enforcement-kit)
 
 echo "Installation complete!"

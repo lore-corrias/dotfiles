@@ -3,6 +3,8 @@ set -o vi
 
 : "${ZDOTDIR:=$HOME}"
 
+source "$ZDOTDIR/custom/env.zsh"
+
 # installing fzf
 if ! command -v fzf >/dev/null 2>&1 ; then
   ~/.fzf/install --key-bindings --completion --no-update-rc > /dev/null
@@ -36,7 +38,6 @@ autoload -U compinit; compinit
 # Load scripts without defer
 source "$ZDOTDIR/custom/history.zsh"
 source "$ZDOTDIR/custom/conda.zsh"
-source "$ZDOTDIR/custom/env.zsh"
 
 # Load other custom scripts with defer
 for file in $ZDOTDIR/custom/*.zsh; do

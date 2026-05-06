@@ -1,3 +1,5 @@
 # devcontainers
 .devcontainer
 .devcontainer.json
+# serena configs
+.serena
