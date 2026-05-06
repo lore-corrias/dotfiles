@@ -57,3 +57,7 @@ alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
 alias rg='ripgrep'
+
+cs() {
+  claude --system-prompt="$(serena prompts print-cc-system-prompt-override)" "$@"
+}

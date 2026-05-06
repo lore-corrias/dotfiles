@@ -11,6 +11,8 @@ if [ -d "$HOME/.spicetify" ]; then
   export PATH=$HOME/.poba:$PATH
 fi
 
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
 {{- if eq .profile "devcontainer" }}
 export XDG_CONFIG_HOME="$HOME/.config"
 export XDG_DATA_HOME="$HOME/.local/share"
