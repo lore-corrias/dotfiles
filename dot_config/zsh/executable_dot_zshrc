@@ -56,12 +56,9 @@ fi
 
 # Command to quickly run a devcontainer
 dpup() {
-  local signing_key
-
   devpod up "$@" \
     --ide none \
     --configure-ssh false \
     --dotfiles https://github.com/lore-corrias/dotfiles \
     --dotfiles-script devcontainers/install.sh
 }
-

@@ -1,10 +1,11 @@
 [user]
 	email = 32979892+lore-corrias@users.noreply.github.com
 	name = lore-corrias
-  signingkey = key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDnlqWyXR9R0k8ugo1as3rMjKrOEYZX32zB+L1SlLi/U github signing key
+  signingkey = {{ .git_ssh_signing_key_full }}
 [commit]
 	gpgSign = true
 [core]
 	excludesFile = ~/.gitignore
+	sshCommand = ssh -o IdentitiesOnly=yes -i ~/.ssh/{{ .git_ssh_login_key }}.pub
 [gpg]
 	format = ssh

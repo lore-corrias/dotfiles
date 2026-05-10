@@ -56,8 +56,14 @@ alias bw="flatpak run --command=bw com.bitwarden.desktop"
 alias ..='cd ..'
 alias ...='cd ../..'
 alias ....='cd ../../..'
-alias rg='ripgrep'
+alias sudo='sudo-rs '
+alias su='su-rs '
 
 cs() {
   claude --system-prompt="$(serena prompts print-cc-system-prompt-override)" "$@"
 }
+
+# Unaliases
+unalias cd
+unalias docker
+unalias docker-compose

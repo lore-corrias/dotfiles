@@ -2,3 +2,8 @@ data:
   # Env variable to distinguish between devcontainers
   # dotfiles and host ones
   profile: '{{ env "DOTFILES_PROFILE" | default "host" }}'
+  git_ssh_login_key: "id_ed25519_login"
+  git_ssh_login_label: "github login key"
+  git_ssh_signing_key: "id_ed25519_signing"
+  git_ssh_signing_key_full: "key::ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDnlqWyXR9R0k8ugo1as3rMjKrOEYZX32zB+L1SlLi/U"
+  git_ssh_signing_label: "github signing key"

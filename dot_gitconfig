@@ -1,9 +1,7 @@
 [includeIf "hasconfig:remote.*.url:https://github.com/**"]
   path = ~/.gitconfig-github
-[includeIf "hasconfig:remote.*.url:git@github.com:/**"]
+[includeIf "hasconfig:remote.*.url:git@github.com:*/**"]
   path = ~/.gitconfig-github
-[includeIf "gitdir:~/Lavoro/"]
-  path = ~/.gitconfig-work
 [filter "lfs"]
   clean = git-lfs clean -- %f
   smudge = git-lfs smudge -- %f

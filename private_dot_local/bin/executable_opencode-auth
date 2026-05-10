@@ -1,0 +1,58 @@
+#!/bin/bash
+set -euo pipefail
+
+AUTH_FILE="$HOME/.local/share/opencode/auth.json"
+BW_ITEM="deepseek-api-key"
+
+# Skip if already configured
+if [[ -f "$AUTH_FILE" ]] && jq -e '.deepseek.key | length > 0' "$AUTH_FILE" >/dev/null 2>&1; then
+  exit 0
+fi
+
+# Ensure bw is installed
+if ! command -v bw &>/dev/null; then
+  echo "[!] Bitwarden CLI (bw) not found. Install it first: brew install bitwarden-cli"
+  exit 1
+fi
+
+# Check/establish auth session
+BW_STATUS=$(bw status 2>/dev/null | jq -r '.status // "unauthenticated"')
+if [[ "$BW_STATUS" == "unauthenticated" ]]; then
+  if [[ -n "${BW_CLIENTID:-}" && -n "${BW_CLIENTSECRET:-}" ]]; then
+    BW_SESSION=$(bw login --apikey --raw)
+    export BW_SESSION
+  else
+    echo "[!] Bitwarden not logged in."
+    echo "    Set BW_CLIENTID + BW_CLIENTSECRET for API-key login, or run: bw login"
+    exit 1
+  fi
+elif [[ "$BW_STATUS" == "locked" ]]; then
+  if [[ -n "${BW_SESSION:-}" ]]; then
+    : # use existing session
+  else
+    echo "[!] Bitwarden vault locked."
+    echo "    Export a session key: BW_SESSION=\"\$(bw unlock --raw)\""
+    exit 1
+  fi
+fi
+
+# Retrieve the API key from the secure note's Notes field
+NOTES=$(bw get item "$BW_ITEM" 2>/dev/null | jq -r '.notes // empty')
+if [[ -z "$NOTES" ]]; then
+  echo "[!] Bitwarden item '$BW_ITEM' not found or Notes field is empty."
+  echo "    Create a secure note named '$BW_ITEM' with the DeepSeek API key in its Notes field."
+  exit 1
+fi
+
+# Write auth file
+mkdir -p "$(dirname "$AUTH_FILE")"
+cat > "$AUTH_FILE" <<JSON
+{
+  "deepseek": {
+    "type": "api",
+    "key": "$NOTES"
+  }
+}
+JSON
+
+echo "[ok] OpenCode DeepSeek credentials written to $AUTH_FILE"

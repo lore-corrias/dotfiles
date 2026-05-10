@@ -1,0 +1,25 @@
+#!/bin/bash
+set -euo pipefail
+
+mkdir -p "$HOME/.ssh"
+
+LOGIN_KEY="{{ .git_ssh_login_key }}"
+LOGIN_LABEL="{{ .git_ssh_login_label }}"
+SIGNING_KEY="{{ .git_ssh_signing_key }}"
+SIGNING_LABEL="{{ .git_ssh_signing_label }}"
+
+KEY=$(ssh-add -L 2>/dev/null | grep "$LOGIN_LABEL" | head -1)
+if [[ -n "$KEY" ]]; then
+  echo "$KEY" > "$HOME/.ssh/${LOGIN_KEY}.pub"
+  echo "[ok] ~/.ssh/${LOGIN_KEY}.pub (matching '$LOGIN_LABEL')"
+else
+  echo "[!] SSH login key matching '$LOGIN_LABEL' not found in agent."
+fi
+
+KEY=$(ssh-add -L 2>/dev/null | grep "$SIGNING_LABEL" | head -1)
+if [[ -n "$KEY" ]]; then
+  echo "$KEY" > "$HOME/.ssh/${SIGNING_KEY}.pub"
+  echo "[ok] ~/.ssh/${SIGNING_KEY}.pub (matching '$SIGNING_LABEL')"
+else
+  echo "[!] SSH signing key matching '$SIGNING_LABEL' not found in agent."
+fi

@@ -28,15 +28,11 @@ fi
 # Install from Brewfile
 brew bundle install --file=$HOME/.config/brewfile/Brewfile
 
+# Configure OpenCode credentials from Bitwarden
+opencode-auth || echo "[!] opencode-auth failed — run it manually after setting up Bitwarden"
+
 # Install and configure serena for claude
 uv tool install -p 3.13 serena-agent@latest --prerelease=allow && \
   serena setup claude-code
-
-# Install LSP skill for claude code
-(cd /tmp && \
-  git clone https://github.com/nesaminua/claude-code-lsp-enforcement-kit.git && \
-  cd claude-code-lsp-enforcement-kit && \
-  bash install.sh && 
-  rm -r /tmp/claude-code-lsp-enforcement-kit)
 
 echo "Installation complete!"
